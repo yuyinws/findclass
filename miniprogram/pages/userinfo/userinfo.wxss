@@ -1,0 +1,96 @@
+.avatar{
+  width:80rpx;
+  height:80rpx;
+  margin-left:600rpx;
+  border-radius: 50%;
+  margin-top:10rpx;
+ 
+}
+
+
+.divider{
+  height: 1px;
+  width:100%;
+  background: #dbdbdb;
+  position: absolute;
+  top:100rpx
+}
+
+.divider2{
+  height: 1px;
+  width:100%;
+  background: #dbdbdb;
+  position: absolute;
+  top:180rpx
+}
+
+.divider3{
+  height: 1px;
+  width:100%;
+  background: #dbdbdb;
+  position: absolute;
+  top:260rpx
+}
+
+.divider4{
+  height: 1px;
+  width:100%;
+  background: #dbdbdb;
+  position: absolute;
+  top:340rpx
+}
+
+.divider5{
+  height: 1px;
+  width:100%;
+  background: #dbdbdb;
+  position: absolute;
+  top:420rpx
+}
+
+.avatarIcon{
+  position: absolute;
+  left:700rpx;
+  top:30rpx
+}
+
+.nickNameIcon{
+  position: absolute;
+  left:700rpx;
+  top:126rpx;
+  
+}
+
+.IntroductionIcon{
+  position: absolute;
+  left:700rpx;
+  top:205rpx;
+}
+
+.SubjectIcon{
+  position: absolute;
+  left:700rpx;
+  top:358rpx;
+}
+
+.CityIcon{
+  position: absolute;
+  left:700rpx;
+  top:281rpx;
+}
+
+.city{
+  position:absolute;
+  top:276rpx;
+  right:50rpx;
+  text-align:left;
+  color: gray
+}
+
+.subject{
+  position:absolute;
+  top:353rpx;
+  right:50rpx;
+  text-align:left;
+  color: gray
+}

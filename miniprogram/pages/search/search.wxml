@@ -1,0 +1,58 @@
+<van-tabbar active="{{ active }}" bind:change="onChange">
+  <van-tabbar-item name="search" icon="search">课程查询</van-tabbar-item>
+  <van-tabbar-item name="recommend" icon="good-job-o">课程推荐</van-tabbar-item>
+  <van-tabbar-item name="market" icon="balance-pay">交易市场</van-tabbar-item>
+  <van-tabbar-item name="personal" icon="user-o">个人主页</van-tabbar-item>
+</van-tabbar>
+
+<van-cell icon="hotel-o" title="开课学院:{{collegeName}}" is-link bind:click="collegeNameShowPopup" />
+<van-popup show="{{ collegeNameShow }}" bind:close="onClose" round="true" position="top">
+  <van-picker
+  show-toolbar
+  title="开课学院"
+  columns="{{ collegeNameColumns }}"
+  bind:cancel="onCancel"
+  bind:confirm="collegeNameOnConfirm"
+  item-height="50"
+/>
+</van-popup>
+
+<van-cell icon="location-o" title="教学楼:{{buildingName}}" is-link bind:click="buildingNameShowPopup" />
+<van-popup show="{{ buildingNameShow }}" bind:close="onClose" round="true" position="top">
+  <van-picker
+  show-toolbar
+  title="教学楼"
+  columns="{{ buildingNameColumns }}"
+  bind:cancel="onCancel"
+  bind:confirm="buildingNameOnConfirm"
+  item-height="50"
+/>
+</van-popup>
+<van-cell icon="calender-o" title="时间:{{time}}" is-link bind:click="timeShowPopup" />
+<van-popup show="{{ timeShow }}" position="top" bind:close="onClose" round="true">
+<wux-navbar leftText="取消" title="星期-起始节次-终止节次" rightText="确定" bind:click="timeConfirm" />
+<wux-multi-picker-view options="{{ options }}" value="{{defaultValue}}" bind:scrollChange="onValueChange" />
+</van-popup>
+<van-search
+  value="{{ courseName }}"
+  placeholder="请输入课程名关键词"
+  bind:change="getCourseName"
+  leftIcon="notes-o"
+>
+</van-search>
+<van-search
+  value="{{ teacherName }}"
+  placeholder="请输入老师姓名"
+  bind:change="getTeacherName"
+  leftIcon="manager-o"
+>
+</van-search>
+<button class="search" bindtap="search" hover-class="searchhover">查询</button>
+<button class="reset" bindtap="reset" hover-class="resethover">重置</button>
+
+<van-toast id="van-toast" />
+<van-notify id="van-notify" />
+<wux-toptips id="wux-toptips" />
+
+
+

@@ -1,0 +1,39 @@
+<view>
+  <view style="height:100rpx;background-color:white" bindtap="EditAvatar">
+    <text style="top:30rpx; position: absolute;left:20rpx">头像</text>
+    <image src="{{avatarUrl}}" class="avatar"></image>
+    <view class="avatarIcon"><van-icon name="arrow"/></view>
+    <view class="divider"></view>
+  </view>
+  <view style="height:76rpx;background-color:white" bindtap="EditNickName">
+    <text style="top:120rpx; position: absolute;left:20rpx">昵称</text>
+    <text style="position:absolute;top:120rpx;right:50rpx;text-align:left;color: gray">{{nickname}}</text>
+    <view class="nickNameIcon"><van-icon name="arrow"/></view>
+    <view class="divider2"></view>
+  </view>
+  <view style="height:76rpx;background-color:white" bindtap="EditIntroduction">
+    <text style="top:200rpx; position: absolute;left:20rpx">个人简介</text>
+    <text style="position:absolute;top:200rpx;right:50rpx;text-align:left;color: gray">让更多的人了解你...</text>
+    <view class="IntroductionIcon"><van-icon name="arrow"/></view>
+    <view class="divider3"></view>
+  </view>
+  <view style="height:76rpx;background-color:white" bindtap="showPopup">
+    <text style="top:280rpx; position: absolute;left:20rpx">城市</text>
+    <text class="city">{{city}}</text>
+    <view class="CityIcon"><van-icon name="arrow"/></view>
+    <view class="divider4"></view>
+  </view>
+    <view style="height:100rpx;background-color:white" bindtap="EditSubject">
+    <text style="top:360rpx; position: absolute;left:20rpx">专业</text>
+    <text class="subject">{{subject}}</text>
+    <view class="SubjectIcon"><van-icon name="arrow"/></view>
+    <view class="divider5"></view>
+  </view>
+</view>
+<loading hidden="{{hidden}}">
+    {{loadingText}}
+</loading>
+<van-toast id="van-toast" />
+<van-popup show="{{ show }}" bind:close="onClose" position="bottom">
+<van-area area-list="{{ areaList }}" value="{{cityCode}}" bind:confirm="getCity" loading="{{areaListLoing}}"/>
+</van-popup>

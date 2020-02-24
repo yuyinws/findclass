@@ -1,0 +1,32 @@
+.title{
+width: 100%;
+text-align: center;
+top: 23px;
+position: relative;
+
+}
+
+.logo{
+position: relative;
+width: 200rpx;
+height: 200rpx;
+left: 256.25rpx;
+top: 101rpx;
+
+}
+
+.loginbtn{
+left: -18rpx;
+top: 218rpx;
+
+}
+
+.card{
+width: 95%;
+margin-left: 2.5%;
+background-color: white;
+margin-top: 200rpx;
+height: 654rpx;
+border-radius: 25rpx;
+
+}

@@ -1,0 +1,26 @@
+.search {
+  margin-top: 10px;
+  width: 80%;
+  background-color: #33cd5f;
+  color: white;
+  border-radius: 98rpx;
+  background: bg_red;
+}
+
+.reset {
+  margin-top: 10px;
+  width: 80%;
+  background-color: #ffc900;
+  color: white;
+  border-radius: 98rpx;
+  background: bg_red;
+}
+ 
+/* 按下变颜色 */
+.searchhover {
+  background:  #2fbd57;
+}
+
+.resethover{
+  background: #eebb02
+}

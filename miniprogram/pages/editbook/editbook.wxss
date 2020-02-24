@@ -1,0 +1,64 @@
+.sell{
+  width: 40%;
+  float: left;
+  position: relative;
+  left: 42rpx;
+  top:15rpx
+}
+
+.wanted{
+  width:40%;
+  float: left;
+  position: relative;
+  right: 20rpx;
+  left: 83rpx;
+  top:15rpx
+}
+
+.radioSty{
+  height: 68rpx;
+  background-color: white;
+  width: 95%;
+  margin-left: 20rpx;
+  border-radius: 100rpx;
+
+}
+
+.sellView{
+  margin-top:10rpx;
+  background-color: white;
+  border-radius: 20rpx;
+  width:95%;
+  margin-left:20rpx;
+  height: 80%
+}
+
+.uploadSty{
+  position: relative;
+  left:50rpx;
+  top:30rpx
+}
+
+.contactSty{
+  /* width:200rpx; */
+  float:left;
+}
+
+.contactInput{
+  float:left;
+}
+
+.upload {
+  margin-top: 10px;
+  width: 80%;
+  background-color: #33cd5f;
+  color: white;
+  border-radius: 98rpx;
+  background: bg_red;
+}
+
+.uploadhover {
+  background:  #2fbd57;
+}
+
+

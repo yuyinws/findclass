@@ -1,0 +1,64 @@
+<swiper class="swiper" autoplay="true" indicator-dots="true" interval="2000" easing-function="easeInOutCubic">
+  <swiper-item wx:for="{{imgList}}">
+    <image class="image" src="{{item.url}}"></image>
+  </swiper-item>
+</swiper>
+
+<view class="infoCard">
+  <van-cell title="还有其他人也在卖这本书" is-link />
+  
+  <van-row>
+  <van-col span="23" offset="1" custom-class="bookName">{{bookName}}</van-col>
+  </van-row>
+
+  <van-row>
+    <van-col span="4" offset="1" custom-class="sellPrice">￥{{sellPrice}}</van-col>
+  <van-col custom-class="discount" offset="2">-{{discount}}%</van-col>
+  </van-row>
+
+  <van-row>
+    <van-col offset="1" span="4">
+      <text decode="{{true}}" class="title">原&nbsp;&nbsp;&nbsp;&nbsp;价：</text>
+    </van-col>
+    <van-col span="10">￥{{originalPrice}}</van-col>
+  </van-row>
+    <van-row>
+    <van-col offset="1" span="4">
+      <text decode="{{true}}" class="title" >作&nbsp;&nbsp;&nbsp;&nbsp;者：</text>
+    </van-col>
+    <van-col span="10">{{author}}</van-col>
+  </van-row>
+
+      <van-row>
+    <van-col offset="1" span="4">
+      <text decode="{{true}}" class="title" style="font-size:29rpx">出&nbsp;版&nbsp;社：</text>
+    </van-col>
+    <van-col span="10">{{press}}</van-col>
+  </van-row>
+
+    <van-row>
+    <van-col offset="1" span="4">
+      <text decode="{{true}}" class="title">备&nbsp;&nbsp;&nbsp;&nbsp;注：</text>
+    </van-col>
+    <van-col span="18">{{remark}}</van-col>
+  </van-row>
+</view>
+
+<view class="bottomCard">
+  <van-row>
+    <van-col offset="2" span="4" bindtap="isFavorite">
+    <image style="{{isfavorite?'display:none':'display:block'}}" class="bottomIcon" src="../../style/icon/notFavorite.png"></image>
+    <image style="{{isfavorite?'display:block':'display:none'}}" class="bottomIcon" src="../../style/icon/isFavorite.png"></image>
+    </van-col>
+    <van-col offset="2" span="4"><image class="bottomIcon" src="../../style/icon/seller.png"></image></van-col>
+    <van-col offset="2" span="4"><image class="bottomIcon" src="../../style/icon/chat.png"></image></van-col>
+    <van-col offset="2" span="4"><image class="bottomIcon" src="../../style/icon/contact.png"></image></van-col>
+  </van-row>
+    <van-row>
+    <van-col offset="2" span="4" bindtap="isFavorite"><text class="favoriteTitle">收藏</text></van-col>
+    <van-col offset="2" span="4"><text class="favoriteTitle">卖家</text></van-col>
+    <van-col offset="2" span="4"><text class="favoriteTitle">留言</text></van-col>
+    <van-col offset="1" span="4"><text class="favoriteTitle">联系方式</text></van-col>
+  </van-row>
+</view>
+

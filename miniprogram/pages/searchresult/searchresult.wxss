@@ -1,0 +1,65 @@
+.coursecard{
+  background-color: white;
+  margin-top:20rpx;
+  width:95%;
+  margin-left:20rpx;
+  border-radius: 10rpx;
+  font-size: 26rpx
+}
+
+.presscard{
+  background-color: #fcfafa;
+  margin-top:20rpx;
+  width:95%;
+  margin-left:20rpx;
+  border-radius: 10rpx
+}
+
+.checkdetail{
+  height: 50rpx;
+  background-color:#1989fa;
+  color: white;
+  margin-bottom: 15rpx;
+  margin-right: 20rpx;
+  text-align: center;
+  border-radius: 10rpx;
+  font-size:25rpx;
+  line-height: 50rpx
+}
+
+.clickcheckdetail{
+  height: 50rpx;
+  background-color:#1978d8;
+  color: white;
+  margin-bottom: 15rpx;
+  margin-right: 20rpx;
+  text-align: center;
+  border-radius: 10rpx;
+  font-size:25rpx;
+  line-height: 50rpx
+}
+
+page {
+  background-color:#f3f3f3;
+  height: 100%;
+  font-size: 30rpx;
+  line-height: 1.6;
+}
+
+.search{
+  background-color:gainsboro
+}
+
+.courseDetailBtn{
+  border:1px solid;
+  width:40rpx;
+  height: 40rpx;
+  background:red;
+  line-height:20rpx;
+ 
+}
+
+.text{
+   font-size: 10rpx;
+}
+

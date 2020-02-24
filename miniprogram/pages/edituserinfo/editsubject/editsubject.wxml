@@ -1,0 +1,11 @@
+  <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="page-section">
+    <view class="page-section-title">请输入专业，最多不超过10个字</view>
+    <view class="textarea-wrp">
+      <textarea name="subject" bindblur="" auto-height value="{{subject}}" maxlength="10"/>
+    </view>
+    <button formType="submit" type="primary" style="margin-top:10rpx">提交</button>
+    <button formType="reset" type="warn" style="margin-top:10rpx">重置</button>
+  </view>
+</form>
+<van-toast id="van-toast" />

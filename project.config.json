@@ -1,0 +1,144 @@
+{
+	"miniprogramRoot": "miniprogram/",
+	"cloudfunctionRoot": "cloudfunctions/",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"enhance": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": false,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"appid": "wxa9c7379c29c75b8f",
+	"projectname": "findClass",
+	"libVersion": "2.10.1",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "db guide",
+					"pathName": "pages/databaseGuide/databaseGuide",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "pages/personal/personal",
+					"pathName": "pages/personal/personal",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/market/market",
+					"pathName": "pages/market/market",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/search/search",
+					"pathName": "pages/search/search",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/recommend/recommend",
+					"pathName": "pages/recommend/recommend",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "pages/dropdown-menu/index",
+					"pathName": "pages/dropdown-menu/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userinfo/userinfo",
+					"pathName": "pages/userinfo/userinfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/edituserinfo/editname/editname",
+					"pathName": "pages/edituserinfo/editname/editname",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/edituserinfo/editintroduction/editintroduction",
+					"pathName": "pages/edituserinfo/editintroduction/editintroduction",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/searchresult/searchresult",
+					"pathName": "pages/searchresult/searchresult",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/editbook/editbook",
+					"pathName": "pages/editbook/editbook",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/login/login",
+					"pathName": "pages/login/login",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 12,
+					"name": "pages/bookdetail/bookdetail",
+					"pathName": "pages/bookdetail/bookdetail",
+					"query": "bookid=7d79e8035e4e794e018f5b764d1ee596",
+					"scene": null
+				}
+			]
+		}
+	}
+}
