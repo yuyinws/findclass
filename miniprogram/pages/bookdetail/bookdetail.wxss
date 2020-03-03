@@ -102,3 +102,9 @@ left: -4rpx;
 
 
 }
+
+.timeago{
+  text-align: right;
+color: #909399;
+
+}

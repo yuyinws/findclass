@@ -23,9 +23,10 @@ exports.main = async (event, context) => {
       contact:event.contact,
       press:event.press,
       isSell:0,
-      bookType:event.selectedBookType,
+      bookType:event.bookType,
       author:event.author,
-      discount:event.discount
+      discount:event.discount,
+      remark:event.remark
     }
   })
 }

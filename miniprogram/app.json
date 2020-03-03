@@ -11,7 +11,8 @@
     "pages/searchresult/searchresult",
     "pages/editbook/editbook",
     "pages/login/login",
-    "pages/bookdetail/bookdetail"
+    "pages/bookdetail/bookdetail",
+    "pages/classdetail/classdetail"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -66,6 +67,14 @@
     "van-uploader": "miniprogram_npm/vant-weapp/uploader/index",
     "van-dialog": "miniprogram_npm/vant-weapp/dialog/index",
     "wux-cell-group": "miniprogram_npm/wux-weapp/cell-group/index",
-    "wux-select": "miniprogram_npm/wux-weapp/select/index"
+    "wux-select": "miniprogram_npm/wux-weapp/select/index",
+    "wux-timeago": "miniprogram_npm/wux-weapp/timeago/index",
+    "wux-popover": "miniprogram_npm/wux-weapp/popover/index",
+    "van-collapse": "miniprogram_npm/vant-weapp/collapse/index",
+    "van-collapse-item": "miniprogram_npm/vant-weapp/collapse-item/index",
+    "wux-tag": "miniprogram_npm/wux-weapp/tag/index",
+    "van-rate": "miniprogram_npm/vant-weapp/rate/index",
+    "wux-accordion-group": "miniprogram_npm/wux-weapp/accordion-group/index",
+    "wux-accordion": "miniprogram_npm/wux-weapp/accordion/index"
   }
 }

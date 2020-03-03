@@ -9,10 +9,6 @@
 
 .presscard{
   background-color: #fcfafa;
-  margin-top:20rpx;
-  width:95%;
-  margin-left:20rpx;
-  border-radius: 10rpx
 }
 
 .checkdetail{
@@ -63,3 +59,12 @@ page {
    font-size: 10rpx;
 }
 
+
+.infoIcon{
+top: 4px;
+position: relative!important;
+left: 2px;
+font-size: 38rpx!important;
+color: blue;
+
+}

@@ -5,16 +5,17 @@ var sellPrice = ""
 var contact = ""
 var press = ""
 var author = ""
+var remark = ""
 const bookType = {
   '理学': ['大气科学', '地理', '地球物理', '地质学', '海洋科学', '化学', '力学', '生物', '数学', '物理', '统计学', '天文学', '心理学', '材料科学', '其他'],
   '工学': ['机器仪表类', '材料类', '测绘类', '地矿类', '电工电子类', '海洋工程类', '化工制药类', '航空航天类', '环境安全类', '交通运输类', '轻工制造类', '土木工程类', '能源动力类', '生物工程类', '其他'],
   '医学类': ['法医学', '护理学', '基础医学', '口腔医学', '临床医学与医学技术', '药学', '预防医学', '中医', '其他'],
-  '农林类': [''],
-  '计算机类': [''],
+  '农林类': ['其他'],
+  '计算机类': ['其他'],
   '经济管理': ['MBA教材', '财政税收类', '电子商务类', '工商管理类', '会计审计类', '金融贸易类', '经济学', '人力资源管理类', '公共管理类', '其他'],
-  '法学类': [''],
+  '法学类': ['其他'],
   '人文学类': ['新闻传播学', '汉语言文学', '教育学', '历史', '旅游', '社会学', '图书馆档案学', '外国语言文学', '哲学', '政治', '其他'],
-  '艺术类': ['']
+  '艺术类': ['其他']
 }
 import { $wuxSelect } from '../../miniprogram_npm/wux-weapp/index'
 import Dialog from '../../miniprogram_npm/vant-weapp/dialog/dialog'
@@ -51,7 +52,8 @@ Page({
     pressValue: String,
     originalPriceValue: String,
     sellPriceValue: String,
-    authorValue:String
+    authorValue:String,
+    remarkValue: String
   },
 
   
@@ -194,6 +196,7 @@ Page({
       sellPriceErr: "",
       pressErr: "",
       authorErr:""
+      
     })
     var flag = 1
     var that = this
@@ -230,7 +233,6 @@ Page({
       var originalPriceStr = originalPrice + ""
       var originalPriceRegex =
         originalPriceStr.search(/(^[1-9]\d*(\.\d{1,2})?$)|(^[0]{1}(\.\d{1,2})?$)/)
-      console.log(originalPriceRegex)
       if (originalPriceRegex == -1) {
         this.setData({
           originalPriceErr: "请检查价格输入格式，小数点后至多2位"
@@ -247,7 +249,6 @@ Page({
       var sellPriceStr = sellPrice + ""
       var sellPriceRegex =
         sellPriceStr.search(/(^[1-9]\d*(\.\d{1,2})?$)|(^[0]{1}(\.\d{1,2})?$)/)
-      console.log(sellPriceRegex)
       if (sellPriceRegex == -1) {
         this.setData({
           sellPriceErr: "请检查价格输入格式，小数点后至多2位"
@@ -255,15 +256,9 @@ Page({
         flag = 0
       }
     }
-    if (!contact) {
+    if (contact&&this.data.contactType == 1) {
       this.setData({
-        contactErr: "不得为空"
-      })
-      flag = 0
-    }
-    if (this.data.contactType == 1) {
-      this.setData({
-        contactErr: this.data.contactErr + ' 请选择联系方式 '
+        contactErr: ' 请选择联系方式 '
       })
       flag = 0
     }
@@ -271,62 +266,21 @@ Page({
       console.log(this.data.fileList)
       if (!this.data.fileList.length) {
         Toast.fail("请上传至少一张图片")
-      } else {
+      } 
+      else if(!contact || this.data.contactType == 1 ){
         Dialog.confirm({
-          message: '是否发布？'
+          message: '您还未填写联系方式，是否发布？'
         }).then(() => {
-          this.setData({
-            hidden: false,
-            loadingText: "上传中..."
-          })
-          sellPrice = that.returnFloat(sellPrice)
-          originalPrice = that.returnFloat(originalPrice)
-          var discount = ((sellPrice / originalPrice - 1) * -100).toFixed(0)
-          wx.cloud.callFunction({
-            name: 'addSellBook',
-            data: {
-              selectedbookType: that.data.selectedbookType,
-              openid: openid,
-              timestamp: new Date().getTime(),
-              imgList: that.data.fileList,
-              bookName: bookName,
-              originalPrice: originalPrice,
-              sellPrice: sellPrice,
-              contactType: that.data.contactType,
-              contact: contact,
-              press: press,
-              author:author,
-              discount:discount
-            }
-          }).then(res => {
-            console.log(res)
-            this.setData({
-              hidden: true
-            })
-            Dialog.confirm({
-              message: '发布成功，是否跳转至交易市场？'
-            }).then(() => {
-              wx.navigateTo({
-                url: '/pages/market/market',
-              })
-            }).catch(() => {
-              that.setData({
-                selectedBookType: 1,
-                fileList: [],
-                bookNameValue: "",
-                pressValue: "",
-                originalPriceValue: "",
-                sellPriceValue: ""
-              })
-              bookName = ""
-              press = ""
-              originalPrice = ""
-              sellPrice = ""
-
-            });
-          }).catch(res => {
-            Toast.fail("上传失败:(")
-          })
+          this.upload()
+        }).catch(() => {
+          // on cancel
+        });
+      }
+      else {
+        Dialog.confirm({
+          message: '是否确认发布？'
+        }).then(() => {
+          this.upload()
         }).catch(() => {
           // on cancel
         });
@@ -364,7 +318,69 @@ Page({
   },
   getAuthor(e){
     author = e.detail
-    console.log(((sellPrice / originalPrice-1)*-100).toFixed(0))
+  },
+  getRemark(e){
+    remark = e.detail
+  },
+  upload(){
+    console.log(typeof(this.data.selectedBookType))
+    var booktype = this.data.selectedBookType
+    var that = this
+    this.setData({
+      hidden: false,
+      loadingText: "上传中..."
+    })
+    sellPrice = that.returnFloat(sellPrice)
+    originalPrice = that.returnFloat(originalPrice)
+    var discount = ((sellPrice / originalPrice - 1) * -100).toFixed(0)
+    wx.cloud.callFunction({
+      name: 'addSellBook',
+      data: {
+        bookType: booktype,
+        openid: openid,
+        timestamp: new Date().getTime(),
+        imgList: that.data.fileList,
+        bookName: bookName,
+        originalPrice: originalPrice,
+        sellPrice: sellPrice,
+        contactType: that.data.contactType,
+        contact: contact,
+        press: press,
+        author: author,
+        discount: discount,
+        remark:remark
+      }
+    }).then(res => {
+      console.log(res)
+      this.setData({
+        hidden: true,
+        fileList:[]
+      })
+      Dialog.confirm({
+        message: '发布成功，是否离开此页面？'
+      }).then(() => {
+        wx.navigateBack()
+      }).catch(() => {
+        that.setData({
+          selectedBookType: 1,
+          fileList: [],
+          bookNameValue: "",
+          pressValue: "",
+          originalPriceValue: "",
+          sellPriceValue: "",
+          remarkValue:"",
+          authorValue:""
+        })
+        bookName = ""
+        press = ""
+        originalPrice = ""
+        sellPrice = ""
+        remark = ""
+        author = ""
+      });
+    }).catch(res => {
+      Toast.fail("上传失败:(")
+    })
   }
 
 });

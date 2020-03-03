@@ -2,11 +2,11 @@ const db = wx.cloud.database()
 const _ = db.command
 const $ = db.command.aggregate
 
-
 Page({
   data:{
     result:"",
-    isViewShowArr:[],
+    aggregateCount:0,
+    aggregateTotal:"",
     hidden:true,
     searchArr:[],
     count:0,
@@ -18,9 +18,8 @@ Page({
   onLoad(e){
     var isViewShowArr = []
     var that = this
-    var searchObj = JSON.parse(e.searchStr)
-    //var searchObj = {course_name:"马克思"}
-    console.log(searchObj)
+    var searchObj =JSON.parse(e.searchStr)
+    //var searchObj = {course_name:"高等数学"}
     var searchArr = []
     this.setData({
       hidden: false,
@@ -50,46 +49,46 @@ Page({
         $options: 'i'
       }
     }
-    
+
+
     db.collection('classinfo').where(searchObj).count().then(res=>{
-      for (var i=0;i<res.total;i++){
-        isViewShowArr.push(0)
-      }
+
       that.setData({
-        isViewShowArr:isViewShowArr,
+
         total: res.total
       })
-      console.log(isViewShowArr)
-      db.collection('classinfo').where(searchObj).get({
-        success(res){
-          console.log(res.data)
+      db.collection('classinfo').aggregate().match(searchObj).group({
+        _id: {
+          course_name: '$course_name',
+          teacher_name: '$teacher_name'
+        },
+        count: $.sum(1)
+      }).limit(30).end().then(res => {
+        console.log(res)
+        that.setData({
+          result:res.list
+        })
+        db.collection("classinfo").aggregate().match(searchObj).group({
+          _id: {
+            course_name: '$course_name',
+            teacher_name: '$teacher_name'
+          }
+        }).group({
+          _id: null,
+          count: $.sum(1),
+        }).end().then(res => {
           that.setData({
-            result:res.data,
-            hidden:true
+            aggregateTotal: res.list[0].count,
+            hidden:true,
           })
-        },fail(res){
-          console.log(res)
-        }
+          console.log(res.list[0].count)
+        })
       })
-    }).catch(res=>{
-      console.log(res)
-    })
-  },
-  changeIsViewShow(e){
-    console.log(e)
-    var index = e.currentTarget.dataset.index
-    var isShow = this.data.isViewShowArr
-    if (isShow[index]==0){
-      isShow[index]=1
-      this.setData({
-        isViewShowArr:isShow
-      })
-    }else{
-      isShow[index]=0
-      this.setData({
-        isViewShowArr: isShow
-      })
-    }
+      
+     })
+
+
+    
   },
   onReachBottom(){
     var searchObj = this.data.searchObj
@@ -98,50 +97,41 @@ Page({
     })
     var newData = []
     var that = this
-    console.log(this.data.total)
-    var count = this.data.count+20
-    if (this.data.total<count){
+    console.log(this.data.aggregateCount)
+    var count = this.data.aggregateCount+30
+    console.log(count)
+    if (this.data.aggregateTotal<count){
       this.setData({
         hidden:true,
         isMoreCourse:false
       })
       return
     }
-    db.collection('classinfo').where(searchObj).skip(count).get({
-      success:function(res){
-        console.log(res)
-        for (let i in res.data){
-          newData.push(res.data[i])
-        }
-        var oldData = that.data.result
-        that.setData({
-          result:oldData.concat(newData),
-          count:count,
-          hidden:true
-        })
-      }
-    })
-
-  },
-  test(){
-    db.collection("classinfo").where({
-      course_name: {
-        $regex: '.*数学.*',
-        $options:'i'
-      }
-    }).get({
-      success:function(res){
-        console.log(res) 
+    db.collection('classinfo').aggregate().match(searchObj).group({
+      _id: {
+        course_name: '$course_name',
+        teacher_name: '$teacher_name'
       },
-      fail(res){
-        console.log(res)
+      count:$.sum(1)
+    }).skip(count).limit(30).end().then(res => {
+      console.log(res.list)
+      for( let i in res.list){
+        newData.push(res.list[i])
       }
+      var oldData = that.data.result
+      that.setData({
+         result:oldData.concat(newData),
+         aggregateCount:count,
+         hidden:true
+      })
     })
   },
-  checkCourseDetail(){
 
-  },
-  touchStart(e){
+  checkCourseDetail(e){
     console.log(e)
-  }
+    let searchStr = JSON.stringify(e.currentTarget.dataset)
+    wx.navigateTo({
+      url: '/pages/classdetail/classdetail?searchStr=' + searchStr
+    })
+  },
 })

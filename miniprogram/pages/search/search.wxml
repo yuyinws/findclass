@@ -2,7 +2,7 @@
   <van-tabbar-item name="search" icon="search">课程查询</van-tabbar-item>
   <van-tabbar-item name="recommend" icon="good-job-o">课程推荐</van-tabbar-item>
   <van-tabbar-item name="market" icon="balance-pay">交易市场</van-tabbar-item>
-  <van-tabbar-item name="personal" icon="user-o">个人主页</van-tabbar-item>
+  <van-tabbar-item name="personal" icon="user-o">个人中心</van-tabbar-item>
 </van-tabbar>
 
 <van-cell icon="hotel-o" title="开课学院:{{collegeName}}" is-link bind:click="collegeNameShowPopup" />

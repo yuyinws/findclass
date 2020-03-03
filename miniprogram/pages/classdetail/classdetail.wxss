@@ -1,0 +1,68 @@
+
+.courseName{
+  font-size:48rpx;
+}
+
+.teacherName{
+  position: relative;
+left: 40rpx;
+top: -32rpx;
+font-size: 37rpx;
+color: #C0C4CC
+}
+
+.borderSty{
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  width:95%;
+  position: relative;
+  left:2.5%;
+  top:20rpx;
+  text-align:center;
+}
+
+.tag{
+  margin-top: 45rpx;
+  width:95%;
+  margin-left:2.5%;
+  background-color: #F2F6FC;
+  float:left;
+}
+
+.tags{
+float:left;
+margin:20rpx 10rpx 20rpx 10rpx!important
+}
+
+.van-hairline--top-bottom:after{
+  border-width:0px!important
+}
+
+.rate{
+  color: #bdbdbd;
+  font-size: 41rpx;
+  position: relative;
+  bottom: 2rpx;
+right: 5rpx;
+
+}
+
+.rateNum{
+  position: relative;
+  color: #bdbdbd;
+  bottom: 11rpx;
+  right: 87rpx;
+
+}
+
+.iconSty{
+  left: 10rpx;
+font-size: 32rpx!important;
+position: relative!important;
+top: 7rpx;
+
+}
+
+.sendCommentBtn{
+  border:1px solid;
+  width: 50rpx
+}

@@ -8,7 +8,8 @@
   <van-cell title="还有其他人也在卖这本书" is-link />
   
   <van-row>
-  <van-col span="23" offset="1" custom-class="bookName">{{bookName}}</van-col>
+  <van-col span="15" offset="1" custom-class="bookName">{{bookName}}</van-col>
+  <van-col span="7" custom-class="timeago"><wux-timeago to="{{ timestamp }}" />上传</van-col>
   </van-row>
 
   <van-row>
@@ -28,6 +29,12 @@
     </van-col>
     <van-col span="10">{{author}}</van-col>
   </van-row>
+     <van-row>
+    <van-col offset="1" span="4">
+      <text decode="{{true}}" class="title" >类&nbsp;&nbsp;&nbsp;&nbsp;别：</text>
+    </van-col>
+    <van-col span="10">{{bookType}}</van-col>
+  </van-row>
 
       <van-row>
     <van-col offset="1" span="4">
@@ -43,22 +50,22 @@
     <van-col span="18">{{remark}}</van-col>
   </van-row>
 </view>
+<van-tabbar active="{{ active }}" bind:change="onChange">
+  <van-tabbar-item >
+    <image
+      slot="icon"
+      src="{{ starIcon }}"
+      mode="aspectFit"
+      style="width: 30px; height: 18px;"
+    />
+    收藏
+  </van-tabbar-item>
+  <van-tabbar-item icon="user-o">卖家信息</van-tabbar-item>
+  <van-tabbar-item icon="comment-o">留言</van-tabbar-item>
+  <van-tabbar-item icon="phone-o">联系卖家</van-tabbar-item>
+</van-tabbar>
 
-<view class="bottomCard">
-  <van-row>
-    <van-col offset="2" span="4" bindtap="isFavorite">
-    <image style="{{isfavorite?'display:none':'display:block'}}" class="bottomIcon" src="../../style/icon/notFavorite.png"></image>
-    <image style="{{isfavorite?'display:block':'display:none'}}" class="bottomIcon" src="../../style/icon/isFavorite.png"></image>
-    </van-col>
-    <van-col offset="2" span="4"><image class="bottomIcon" src="../../style/icon/seller.png"></image></van-col>
-    <van-col offset="2" span="4"><image class="bottomIcon" src="../../style/icon/chat.png"></image></van-col>
-    <van-col offset="2" span="4"><image class="bottomIcon" src="../../style/icon/contact.png"></image></van-col>
-  </van-row>
-    <van-row>
-    <van-col offset="2" span="4" bindtap="isFavorite"><text class="favoriteTitle">收藏</text></van-col>
-    <van-col offset="2" span="4"><text class="favoriteTitle">卖家</text></van-col>
-    <van-col offset="2" span="4"><text class="favoriteTitle">留言</text></van-col>
-    <van-col offset="1" span="4"><text class="favoriteTitle">联系方式</text></van-col>
-  </van-row>
-</view>
-
+<loading hidden="{{hidden}}">
+  {{loadingText}}
+</loading>
+<van-toast id="van-toast" />

@@ -10,45 +10,28 @@
   </van-col>
   </van-row>
   <van-row>
-    <van-col span="20" offset="1">共找到{{total}}门课程</van-col>
+    <van-col span="20" offset="1">共找到{{total}}门课程
+      <view style="display:inline-block;margin-left:20rpx">课程名后面的数字
+        <wux-popover mask="true" maskClosable placement="bottom" content="数字代表课程名相同且老师相同的课程总数">
+          <van-icon name="warning-o" custom-class="infoIcon"/>
+        </wux-popover>
+      </view>
+    </van-col>
   </van-row>
 </view>
 </van-sticky>
-<view catchtap="changeIsViewShow" wx:for="{{result}}" wx:key="_id" data-id="{{item._id}}" data-index="{{index}}" class="coursecard">
-  <van-row gutter="">
+<view catchtap="checkCourseDetail" hover-class="presscard" wx:for="{{result}}" wx:key="index" data-course_name="{{item._id.course_name}}" data-teacher_name="{{item._id.teacher_name}}" class="coursecard">
+  <van-row>
   <view style="height:20rpx"></view>
     <van-col span="1"><text decode="{{true}}">&ensp;</text></van-col>
     <van-col span="1"><van-icon name="notes-o" /></van-col>
-    <van-col span="10">{{item.course_name}}</van-col>
-    <!-- <van-col span="1"><van-icon name="calender-o" /></van-col>
-    <van-col span="4">{{item.week}}</van-col> -->
+    <van-col span="10">{{item._id.course_name}}<span><text style="color:blue" decode="{{true}}">&ensp;*{{item.count}}*</text></span></van-col>
     <van-col offset="1" span="1"><van-icon name="manager-o" /></van-col>
-    <van-col span="8">{{item.teacher_name}}</van-col>
-    <van-col span="1"><van-icon name="{{isViewShowArr[index]==1?'arrow-down':'arrow'}}" /></van-col>
+    <van-col span="8">{{item._id.teacher_name}}</van-col>
+    <van-col span="1"><van-icon name="arrow" /></van-col>
     <van-col span="1"><text decode="{{true}}">&ensp;</text></van-col>
   <view style="height:50rpx"></view>
   </van-row>
-  <view style="{{isViewShowArr[index]==1?'display:block':'display:none'}}">
-    <van-row>
-      <van-col span="1"><text decode="{{true}}">&ensp;</text></van-col>
-      <van-col span="1"><van-icon name="hotel-o" /></van-col>
-      <van-col span="21">{{item.college_name}}</van-col>
-      <!-- <van-col span="1"><van-icon name="clock-o" /></van-col>
-      <van-col span="13">{{item.class_time}}</van-col> -->
-    </van-row>
-    <van-row>
-      <van-col span="1"><text decode="{{true}}">&ensp;</text></van-col>
-      <van-col span="1"><van-icon name="location-o" /></van-col>
-      <van-col span="22">{{item.campus}}|{{item.class_room_name}}</van-col>
-
-    </van-row>
-    <van-row>
-      <van-col span="1"><text decode="{{true}}">&ensp;</text></van-col>
-      <van-col span="1"><van-icon name="clock-o" /></van-col>
-      <van-col span="15">{{item.week}}/{{item.class_time}}</van-col>
-      <van-col offset="1" span="5"><view catchtap="checkCourseDetail" class="checkdetail" hover-class="clickcheckdetail">查看详情</view></van-col>
-    </van-row>
-  </view>
 </view>
   <view style="{{isMoreCourse?'display:none':'display:false'}}"><van-divider contentPosition="center" customStyle="color: black;border-color: #dcdfe6;font-size: 12px;">没有更多课程了</van-divider></view>
 </view>

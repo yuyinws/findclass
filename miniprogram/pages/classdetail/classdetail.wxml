@@ -1,0 +1,51 @@
+<view style="margin-bottom:100rpx;width:95%;margin-left:2.5%;background-color:white;height:99%;border-radius:10px">
+  <view class="borderSty">
+    <view class="courseName">{{courseName}}</view>
+    <view>{{teacherName}}</view>
+    <view>
+      <span class="rate">3.5</span>
+      <van-rate disabled allow-half="true" value="{{ rate }}" bind:change="onChange" />
+    </view>
+    <view class="rateNum">20个评分</view>
+  </view>
+  <view class="tag">
+    <span style="font-style:italic;margin-left:10rpx">本课程的热门标签......</span>
+    <view wx:for="{{tagList}}">
+      <wux-tag wux-class="tags" color="blue" bindtap="tagClick">{{item}}</wux-tag>
+    </view>
+  </view>
+  <view style="width:100%;float:left">
+    <van-collapse value="{{ activeName }}" bind:change="changeComment">
+      <van-collapse-item name="1">
+        <view slot="title">学生评价
+          <van-icon custom-class="iconSty" name="comment-o" />
+        </view>
+        提供多样店铺模板，快速搭建网上商城
+      </van-collapse-item>
+    </van-collapse>
+    <van-collapse value="{{ activeNames }}" accordion wx:for="{{classList}}" bind:change="onChange">
+      <van-collapse-item name="{{item.name}}">
+        <view slot="title">
+          <van-icon custom-class="" name="clock-o" />{{item.week}}/{{item.class_time}}</view>
+        <view>
+          <van-icon name="hotel-o" />
+          <view style="display:inline-block">{{item.college_name}}</view>
+        </view>
+        <view style="margin-top:10rpx">
+          <van-icon name="location-o" />
+          <view style="display:inline-block">{{item.campus}}|{{item.class_room_name}}</view>
+        </view>
+        <view style="margin-top:10rpx">
+          <van-icon name="friends-o" />
+          <view style="display:inline-block">{{item.class_name}}</view>
+        </view>
+      </van-collapse-item>
+    </van-collapse>
+  </view>
+
+</view>
+
+<van-tabbar active="{{ active }}" bind:change="onChange">
+  <van-tabbar-item icon="home-o">收藏</van-tabbar-item>
+  <van-tabbar-item icon="search">评价</van-tabbar-item>
+</van-tabbar>
