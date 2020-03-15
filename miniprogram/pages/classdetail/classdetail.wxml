@@ -1,16 +1,16 @@
-<view style="margin-bottom:100rpx;width:95%;margin-left:2.5%;background-color:white;height:99%;border-radius:10px">
+<view style="margin-bottom:100rpx;background-color:white;height:99%;border-radius:10px">
   <view class="borderSty">
     <view class="courseName">{{courseName}}</view>
     <view>{{teacherName}}</view>
     <view>
-      <span class="rate">3.5</span>
+      <span class="rate">{{averageRate}}</span>
       <van-rate disabled allow-half="true" value="{{ rate }}" bind:change="onChange" />
     </view>
-    <view class="rateNum">20个评分</view>
+    <view class="rateNum">{{rateCount}}个评分</view>
   </view>
   <view class="tag">
     <span style="font-style:italic;margin-left:10rpx">本课程的热门标签......</span>
-    <view wx:for="{{tagList}}">
+    <view wx:for="{{hotTagList}}" wx:key="index">
       <wux-tag wux-class="tags" color="blue" bindtap="tagClick">{{item}}</wux-tag>
     </view>
   </view>
@@ -20,10 +20,30 @@
         <view slot="title">学生评价
           <van-icon custom-class="iconSty" name="comment-o" />
         </view>
-        提供多样店铺模板，快速搭建网上商城
+        <view wx:for="{{commentList}}" wx:key="index">
+          <van-row>
+            <van-col>
+              <image style="width:50rpx;height:50rpx;border-radius:50%;margin-top:20rpx" src="{{item.user_info[0].avatarurl}}"></image>
+            </van-col>
+            <van-col offset="1">
+              <view>
+                <span style="position:relative;bottom:6rpx">{{item.user_info[0].nickname}}</span>
+                <van-rate readonly value="{{ item.rate }}" size="10px" gutter="2" allow-half="true" />
+              </view>
+              <view>{{item.timestamp}}</view>
+              <view>{{item.comment}}</view>
+            </van-col>
+          </van-row>
+          <van-row>
+            <van-col offset="2" span="22">
+              <van-divider />
+            </van-col>
+          </van-row>
+          <view bindtap="toAllComment" style="text-align:center" wx:if="{{commentLimit==5&&index==4}}">查看所有评论</view>
+        </view>
       </van-collapse-item>
     </van-collapse>
-    <van-collapse value="{{ activeNames }}" accordion wx:for="{{classList}}" bind:change="onChange">
+    <van-collapse value="{{ activeNames }}" accordion wx:for="{{classList}}" wx:key="index" bind:change="onChange2">
       <van-collapse-item name="{{item.name}}">
         <view slot="title">
           <van-icon custom-class="" name="clock-o" />{{item.week}}/{{item.class_time}}</view>
@@ -42,10 +62,75 @@
       </van-collapse-item>
     </van-collapse>
   </view>
-
 </view>
+<van-popup show="{{show}}" position="top" bind:close="close" round>
+  <view style="width:700rpx;margin-left:25rpx;height:500rpx">
+    <view>
+      <view class="popupBtn" style="background-color:#ee0a24" bindtap="close">关闭</view>
+      <view class="popupBtn" style="background-color:#07c160;margin-left:450rpx" bindtap="confirm">确定</view>
+    </view>
+    <van-divider />
+    <span>轻触选择评分</span>
+    <van-rate style="position:relative;5rpx;top:8rpx" value="{{ value }}" size="{{ 25 }}" allow-half color="#ee0a24" void-color="#eee" void-icon="star" bind:change="onChangeRate" />
+    <van-divider />
+    <van-field value="{{ comment }}" type="textarea" placeholder="请输入评价" clearable autosize border="{{ false }}" required bind:input="getCommentText" maxlength="50" />
+    <view style="margin-top:68rpx;margin-left:600rpx;color:#C0C4CC">{{textCount}}/50</view>
+  </view>
+</van-popup>
 
-<van-tabbar active="{{ active }}" bind:change="onChange">
-  <van-tabbar-item icon="home-o">收藏</van-tabbar-item>
-  <van-tabbar-item icon="search">评价</van-tabbar-item>
+
+<van-popup show="{{favoriteShow}}" position="top" bind:close="close" round>
+  <van-row custom-class="title">
+    <van-col offset="1">
+      添加收藏
+    </van-col>
+  </van-row>
+
+  <van-row>
+    <van-col offset="1" span="23">
+      <view>标签(多个标签用空格分隔):</view>
+      <textarea show-confirm-bar bindinput="getTags" style="border:1px solid #cccccc;margin-top:20rpx;height:50rpx;" auto-height="true"></textarea>
+    </van-col>
+  </van-row>
+  <view style="height:20rpx"></view>
+  <van-row>
+    <van-col offset="1" span="5">
+      <span style="font-size:30rpx;color:#898989;">我的标签:</span>
+    </van-col>
+    <van-col span="18">
+      <view wx:for="{{myTagList}}" wx:key="index" style="display:inline-block">
+        <wux-tag wux-class="favoriteTags" color="cyan">{{item}}</wux-tag>
+      </view>
+    </van-col>
+  </van-row>
+  <view style="height:20rpx"></view>
+  <van-row>
+    <van-col offset="1" span="5">
+      <span style="font-size:30rpx;color:#898989;">热门标签:</span>
+    </van-col>
+    <van-col span="18">
+      <view wx:for="{{hotTagList}}" wx:key="index" style="display:inline-block">
+        <wux-tag wux-class="favoriteTags" color="blue">{{item}}</wux-tag>
+      </view>
+    </van-col>
+  </van-row>
+  <van-row>
+    <van-col offset="15">
+        <view class="popupBtn" style="background-color:#ee0a24" bindtap="close">取消</view>
+    </van-col>
+    <van-col offset="1">
+        <view class="popupBtn" style="background-color:#07c160" bindtap="confirm">保存</view>
+    </van-col>
+  </van-row>
+  <view style="height:20rpx"></view>
+</van-popup>
+
+
+<van-tabbar bind:change="onChange">
+  <van-tabbar-item name="favorite" icon="star-o">收藏</van-tabbar-item>
+  <van-tabbar-item name="comment" icon="comment-o">评价</van-tabbar-item>
 </van-tabbar>
+<van-toast id="van-toast" />
+<loading hidden="{{hidden}}">
+  {{loadingText}}
+</loading>

@@ -18,8 +18,8 @@ Page({
   onLoad(e){
     var isViewShowArr = []
     var that = this
-    var searchObj =JSON.parse(e.searchStr)
-    //var searchObj = {course_name:"高等数学"}
+    //var searchObj =JSON.parse(e.searchStr)
+    var searchObj = {course_name:"高等数学"}
     var searchArr = []
     this.setData({
       hidden: false,
