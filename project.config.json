@@ -145,6 +145,19 @@
 					"pathName": "pages/classdetail/classdetail",
 					"query": "bookid=7d79e8035e4e794e018f5b764d1ee596",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/personal/about/about",
+					"pathName": "pages/personal/about/about",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/personal/favorite/favorite",
+					"pathName": "pages/personal/favorite/favorite",
+					"scene": null
 				}
 			]
 		}

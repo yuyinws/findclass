@@ -1,0 +1,14 @@
+[
+  {
+    "name": "addTag",
+    "value": {
+      "class_info": "test",
+      "user_id": "test",
+      "tagArr": [
+        12,
+        22,
+        11
+      ]
+    }
+  }
+]

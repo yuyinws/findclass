@@ -1,0 +1,37 @@
+<van-row>
+  <van-col offset="8">
+    鸣谢以下UI组件库:
+  </van-col>
+</van-row>
+
+<van-row>
+  <van-col offset="8">
+    <image style="height:256rpx;width:256rpx" src="cloud://test-tkxjp.7465-test-tkxjp-1300603395/about/vant-logo.png" />
+  </van-col>
+</van-row>
+<van-row>
+  <view style="text-align:center;font-size:40rpx">Vant Weapp</view>
+</van-row>
+
+<van-divider />
+<van-row>
+  <van-col offset="8">
+    <image style="height:256rpx;width:256rpx" src="cloud://test-tkxjp.7465-test-tkxjp-1300603395/about/wux-logo.png" />
+  </van-col>
+</van-row>
+<van-row>
+  <view style="text-align:center;font-size:40rpx">Wux Weapp</view>
+</van-row>
+<van-divider />
+<view bind:tap="copyGithubUrl">
+  <van-row>
+    <van-col offset="5">
+      <image style="width:50rpx;height:50rpx"     src="cloud://test-tkxjp.7465-test-tkxjp-1300603395/icon/github.png">
+      </image>
+    </van-col>
+    <van-col>
+      在GitHub上查看源代码
+    </van-col>
+  </van-row>
+</view>
+<van-dialog id="van-dialog" confirm-button-color="#1989fa"/>

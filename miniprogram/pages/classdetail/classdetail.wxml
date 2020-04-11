@@ -82,14 +82,14 @@
 <van-popup show="{{favoriteShow}}" position="top" bind:close="close" round>
   <van-row custom-class="title">
     <van-col offset="1">
-      添加收藏
+      添加标签
     </van-col>
   </van-row>
 
   <van-row>
     <van-col offset="1" span="23">
       <view>标签(多个标签用空格分隔):</view>
-      <textarea show-confirm-bar bindinput="getTags" style="border:1px solid #cccccc;margin-top:20rpx;height:50rpx;" auto-height="true"></textarea>
+      <textarea show-confirm-bar value="{{tagsValue}}" bindinput="getTags" style="border:1px solid #cccccc;margin-top:20rpx;" auto-height="true"></textarea>
     </van-col>
   </van-row>
   <view style="height:20rpx"></view>
@@ -99,7 +99,7 @@
     </van-col>
     <van-col span="18">
       <view wx:for="{{myTagList}}" wx:key="index" style="display:inline-block">
-        <wux-tag wux-class="favoriteTags" color="cyan">{{item}}</wux-tag>
+        <wux-tag bindtap="addTagToText" data-name="{{item}}" wux-class="favoriteTags" color="cyan" bind-clock>{{item}}</wux-tag>
       </view>
     </van-col>
   </van-row>
@@ -110,7 +110,7 @@
     </van-col>
     <van-col span="18">
       <view wx:for="{{hotTagList}}" wx:key="index" style="display:inline-block">
-        <wux-tag wux-class="favoriteTags" color="blue">{{item}}</wux-tag>
+        <wux-tag wux-class="favoriteTags" color="blue" data-name="{{item}}" bindtap="addTagToText">{{item}}</wux-tag>
       </view>
     </van-col>
   </van-row>
@@ -119,7 +119,7 @@
         <view class="popupBtn" style="background-color:#ee0a24" bindtap="close">取消</view>
     </van-col>
     <van-col offset="1">
-        <view class="popupBtn" style="background-color:#07c160" bindtap="confirm">保存</view>
+        <view class="popupBtn" style="background-color:#07c160" bindtap="addTag">保存</view>
     </van-col>
   </van-row>
   <view style="height:20rpx"></view>
@@ -127,7 +127,10 @@
 
 
 <van-tabbar bind:change="onChange">
-  <van-tabbar-item name="favorite" icon="star-o">收藏</van-tabbar-item>
+  <van-tabbar-item name="favorite">
+    <image slot="icon" src="cloud://test-tkxjp.7465-test-tkxjp-1300603395/icon/tag.png" style="width:30rpx"></image>
+    标签
+  </van-tabbar-item>
   <van-tabbar-item name="comment" icon="comment-o">评价</van-tabbar-item>
 </van-tabbar>
 <van-toast id="van-toast" />

@@ -1,0 +1,12 @@
+.coursecard{
+  background-color: white;
+  margin-top:20rpx;
+  width:95%;
+  margin-left:20rpx;
+  border-radius: 10rpx;
+  font-size: 26rpx
+}
+
+.presscard{
+  background-color: #fcfafa;
+}

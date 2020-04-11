@@ -11,20 +11,18 @@
 }
 
 .head{
-  width: 95%;
-  margin-left: 20rpx;
+  width: 100%;
   margin-top:20rpx; 
-  height:200rpx;
-  border-radius: 10rpx;
+  height:170rpx;
   background: white
 }
 
 .avatar{
-  width:150rpx;
-  height: 150rpx;
+  width:100rpx;
+  height: 100rpx;
   border-radius: 50%;
-  margin-top:10rpx;
-  margin-left: 20rpx;
+  margin-top:31rpx;
+  margin-left: 41rpx;
   float: left
 }
 
@@ -32,13 +30,17 @@
   position: absolute;
   font-size: 40rpx;
   font-weight: 600;
-  margin-left:220rpx;
+  margin-left:179rpx;
   margin-top:20rpx;
 }
 
 .editinfo{
   position: absolute;
-  margin-left:220rpx;
-  margin-top:80rpx;
+  margin-left:179rpx;
+  margin-top:85rpx;
   color: gray
+}
+
+.cellGroup{
+  margin-top:15rpx
 }

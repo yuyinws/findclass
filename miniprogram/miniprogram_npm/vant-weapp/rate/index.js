@@ -1,17 +1,33 @@
-import { VantComponent } from '../common/component';
-import { addUnit } from '../common/utils';
-VantComponent({
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var component_1 = require("../common/component");
+component_1.VantComponent({
     field: true,
     classes: ['icon-class'],
     props: {
-        value: Number,
+        value: {
+            type: Number,
+            observer: function (value) {
+                if (value !== this.data.innerValue) {
+                    this.setData({ innerValue: value });
+                }
+            }
+        },
         readonly: Boolean,
         disabled: Boolean,
         allowHalf: Boolean,
-        size: {
-            type: null,
-            observer: 'setSizeWithUnit'
-        },
+        size: null,
         icon: {
             type: String,
             value: 'star'
@@ -34,12 +50,12 @@ VantComponent({
         },
         count: {
             type: Number,
-            value: 5
+            value: 5,
+            observer: function (value) {
+                this.setData({ innerCountArray: Array.from({ length: value }) });
+            },
         },
-        gutter: {
-            type: null,
-            observer: 'setGutterWithUnit'
-        },
+        gutter: null,
         touchable: {
             type: Boolean,
             value: true
@@ -47,47 +63,30 @@ VantComponent({
     },
     data: {
         innerValue: 0,
-        gutterWithUnit: undefined,
-        sizeWithUnit: '20px'
-    },
-    watch: {
-        value(value) {
-            if (value !== this.data.innerValue) {
-                this.setData({ innerValue: value });
-            }
-        }
+        innerCountArray: Array.from({ length: 5 }),
     },
     methods: {
-        setSizeWithUnit(val) {
-            this.setData({
-                sizeWithUnit: addUnit(val)
-            });
-        },
-        setGutterWithUnit(val) {
-            this.setData({
-                gutterWithUnit: addUnit(val)
-            });
-        },
-        onSelect(event) {
-            const { data } = this;
-            const { score } = event.currentTarget.dataset;
+        onSelect: function (event) {
+            var data = this.data;
+            var score = event.currentTarget.dataset.score;
             if (!data.disabled && !data.readonly) {
                 this.setData({ innerValue: score + 1 });
                 this.$emit('input', score + 1);
                 this.$emit('change', score + 1);
             }
         },
-        onTouchMove(event) {
-            const { touchable } = this.data;
+        onTouchMove: function (event) {
+            var _this = this;
+            var touchable = this.data.touchable;
             if (!touchable)
                 return;
-            const { clientX } = event.touches[0];
-            this.getRect('.van-rate__icon', true).then((list) => {
-                const target = list
-                    .sort(item => item.right - item.left)
-                    .find(item => clientX >= item.left && clientX <= item.right);
+            var clientX = event.touches[0].clientX;
+            this.getRect('.van-rate__icon', true).then(function (list) {
+                var target = list
+                    .sort(function (item) { return item.right - item.left; })
+                    .find(function (item) { return clientX >= item.left && clientX <= item.right; });
                 if (target != null) {
-                    this.onSelect(Object.assign(Object.assign({}, event), { currentTarget: target }));
+                    _this.onSelect(__assign(__assign({}, event), { currentTarget: target }));
                 }
             });
         }

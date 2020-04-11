@@ -1,0 +1,50 @@
+<van-tabs active="{{ active }}" bind:change="onChange">
+  <van-tab title="课程">
+    <!-- <van-row custom-class="vanRow" wx:for="{{classList}}">
+      <van-col>
+        {{item.class_info.course_name}}
+      </van-col>
+      <van-col>
+        {{item.class_info.teacher_name}}
+      </van-col>
+    </van-row> -->
+    <view catchtap="checkCourseDetail" hover-class="presscard" wx:for="{{classList}}" wx:key="index" data-course_name="{{item.class_info.course_name}}" data-teacher_name="{{item.class_info.teacher_name}}" class="coursecard">
+  <van-row>
+  <view style="height:20rpx"></view>
+    <van-col span="1"><text decode="{{true}}">&ensp;</text></van-col>
+    <van-col span="1"><van-icon name="notes-o" /></van-col>
+    <van-col span="10">{{item.class_info.course_name}}</van-col>
+    <van-col offset="1" span="1"><van-icon name="manager-o" /></van-col>
+    <van-col span="8">{{item.class_info.teacher_name}}</van-col>
+    <van-col span="1"><van-icon name="arrow" /></van-col>
+    <van-col span="1"><text decode="{{true}}">&ensp;</text></van-col>
+  </van-row>
+  <van-row>
+    <van-col span="22" offset="1"><van-icon name="label-o" />
+    {{item.tags}}
+    </van-col>
+  </van-row>
+    <view style="height:20rpx"></view>
+</view>
+  </van-tab>
+  <van-tab title="市场">
+    <view catchtap="toBookDetail" wx:for="{{starList}}" wx:key="index" class="coursecard" hover-class="presscard" data-id="{{item._id}}">
+    <view style="height:20rpx"></view>
+      <van-row>
+        <van-col span="15" offset="1">
+          <van-icon name="description" />{{item.bookName}}
+        </van-col>
+        <van-col span="5">
+          <van-icon  name="contact" />{{item.author}}
+        </van-col>
+        <van-col offset="1" span="1"><van-icon name="arrow" /></van-col>
+      </van-row>
+      <van-row>
+        <van-col offset="1">
+          <van-icon name="hotel-o" />{{item.press}}
+        </van-col>
+      </van-row>
+      <view style="height:20rpx"></view>
+    </view>
+  </van-tab>
+</van-tabs>
