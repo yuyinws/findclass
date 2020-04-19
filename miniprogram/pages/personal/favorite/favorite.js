@@ -16,22 +16,30 @@ Page({
   },
   data:{
     classList:[],
-    starList:[1,2,3]
+    starList:[],
+    loadingText:"加载中...",
+    hidden:false
   },
   getUserFavoriteClass(){
     var that = this
+    that.setData({
+      hidden:true
+    })
     wx.cloud.callFunction({
       name:"getUserTags",
       data:{
         user_id:user_id,
       }
     }).then(res => {
-      console.log(res)
       that.setData({
-        classList:res.result.list
+        classList:res.result.list,
+        hidden:false
       })
     }).catch(res => {
       console.log(res)
+      that.setData({
+        hidden: false
+      })
     })
   },
   getUserFavoriteClassByTag(tag){
@@ -42,7 +50,6 @@ Page({
         tag:tag
       }
     }).then(res => {
-      console.log(res)
       that.setData({
         classList: res.result.list
       })
@@ -55,15 +62,12 @@ Page({
     db.collection('user').where({
       _id:user_id
     }).get().then(res => {
-      console.log(res)
       let starInfoArr = []
       const starArr = res.data[0].star
       for(var i in starArr){
         console.log(starArr[i])
         db.collection('sell').doc(starArr[i]).get().then(res => {
-          console.log(i,starArr.length)
           starInfoArr.push(res.data)
-          console.log(starInfoArr)
           if(starInfoArr.length == starArr.length){
             that.setData({
               starList:starInfoArr

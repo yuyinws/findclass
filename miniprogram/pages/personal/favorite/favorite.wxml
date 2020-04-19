@@ -1,4 +1,4 @@
-<van-tabs active="{{ active }}" bind:change="onChange">
+<van-tabs active="{{ active }}" bind:change="onChange" sticky animated>
   <van-tab title="课程">
     <!-- <van-row custom-class="vanRow" wx:for="{{classList}}">
       <van-col>
@@ -48,3 +48,7 @@
     </view>
   </van-tab>
 </van-tabs>
+<loading wx:if="{{hidden}}">
+    {{loadingText}}
+</loading>
+

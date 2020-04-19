@@ -157,6 +157,27 @@
 					"id": -1,
 					"name": "pages/personal/favorite/favorite",
 					"pathName": "pages/personal/favorite/favorite",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/personal/feedback/feedback",
+					"pathName": "pages/personal/feedback/feedback",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/personal/favorite/favorite",
+					"pathName": "pages/personal/favorite/favorite",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/editbook/editbook",
+					"pathName": "pages/editbook/editbook",
 					"scene": null
 				}
 			]

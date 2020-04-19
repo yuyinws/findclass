@@ -10,3 +10,9 @@
 .presscard{
   background-color: #fcfafa;
 }
+
+.van-loading{
+  position: fixed;
+  left:50%;
+  top:20%;
+}

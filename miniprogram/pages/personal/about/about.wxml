@@ -25,12 +25,12 @@
 <van-divider />
 <view bind:tap="copyGithubUrl">
   <van-row>
-    <van-col offset="5">
+    <van-col offset="3">
       <image style="width:50rpx;height:50rpx"     src="cloud://test-tkxjp.7465-test-tkxjp-1300603395/icon/github.png">
       </image>
     </van-col>
     <van-col>
-      在GitHub上查看源代码
+      在GitHub上查看小程序源代码
     </van-col>
   </van-row>
 </view>

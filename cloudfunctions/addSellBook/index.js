@@ -26,7 +26,9 @@ exports.main = async (event, context) => {
       bookType:event.bookType,
       author:event.author,
       discount:event.discount,
-      remark:event.remark
+      remark:event.remark,
+      wantedPrice:event.wantedPrice,
+      type:event.type
     }
   })
 }

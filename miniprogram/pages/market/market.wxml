@@ -27,16 +27,15 @@
       </van-tab>
       <van-tab title="求购">
         <view class="contentStyle">
-          <view class="infoStyle" wx:for="{{sellList}}" hover-class="hoverOuterCard">
+          <view class="infoStyle" wx:for="{{wantedList}}" hover-class="hoverOuterCard">
             <view class="outerCard">
               <image class="bookImg" src="{{item.imgList[0].url}}"></image>
               <view class="title">{{item.bookName}}</view>
               <view class="author">{{item.author}}</view>
               <view class="press">{{item.press}}</view>
-              <view class="price">￥{{item.sellPrice}}</view>
-              <view class="discount">-{{item.discount}}%</view>
+              <view class="price" style="width:400rpx">求购价:￥{{item.wantedPrice}}</view>
             </view>
-          </view>
+          </view> 
         </view>
       </van-tab>
     </van-tabs>

@@ -15,7 +15,7 @@
 
 .infoStyle{ 
   background: white;
-  width: 101%;
+  width: 100%;
   margin-left: -1rpx;
   height: 331rpx;
   border-radius: 32rpx;
@@ -54,7 +54,7 @@ position: relative
 }
 
 .author{
-width: 248rpx;
+width: 348rpx;
 height: 46rpx;
 left: 11px;
 top: 10px;

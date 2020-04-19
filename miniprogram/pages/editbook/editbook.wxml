@@ -17,8 +17,8 @@
       <van-field value="{{ bookNameValue }}" clearable label="书名" placeholder="请输入书名" bind:change="getBookName" required error-message="{{bookNameErr}}" />
       <van-field value="{{ authorValue }}" clearable label="作者" placeholder="请输入作者" bind:change="getAuthor" required error-message="{{authorErr}}" />
       <van-field value="{{ pressValue }}" clearable label="出版社" placeholder="请输入出版社" bind:change="getPress" required error-message="{{pressErr}}" />
-      <van-field value="{{ originalPriceValue }}" label="原价" placeholder="请输入原价" clearable bind:change="getOriPrice" required error-message="{{originalPriceErr}}" />
-      <van-field value="{{ sellPriceValue }}" label="出售价" placeholder="请输入出售价" clearable bind:change="getSellPrice" required error-message="{{sellPriceErr}}" />
+      <van-field type="number" value="{{ originalPriceValue }}" label="原价" placeholder="请输入原价" clearable bind:change="getOriPrice" required error-message="{{originalPriceErr}}" />
+      <van-field type="number" value="{{ sellPriceValue }}" label="出售价" placeholder="请输入出售价" clearable bind:change="getSellPrice" required error-message="{{sellPriceErr}}" />
       <van-field value="{{ remarkValue }}" label="备注" type="textarea" placeholder="备注信息" autosize clearable bind:change="getRemark"/>
       <van-cell title="{{ contactType==1?'联系方式':contactType}}" arrow-direction="down" is-link bind:click="showContent" custom-class="contactSty" />
       <van-field placeholder="补充联系方式以便买家及时联系你" input-class="contactInput" clearable bind:change="getContact" error-message="{{contactErr}}" />
@@ -26,8 +26,24 @@
   </view>
   <button class="upload" bindtap="uploadBook" hover-class="uploadhover">发布</button>
 </view>
+
 <view class="wantedView" style="{{radio=='wanted'?'display:block':'display:none'}}">
-  求购
+    <van-uploader bind:delete="deleteWantedImg" file-list="{{ wantedFileList }}" bind:after-read="afterWantedRead" max-count="3" multiple upload-text="点击上传图片" class="uploadSty">
+    </van-uploader>
+    <view style="width:100%;height:30rpx"></view>
+  <van-cell-group>
+      <view bindtap="showPopup">
+      <van-field clearable disabled right-icon="arrow" label="类别" placeholder="{{wantedSelectedBookType==1?'请选择书籍类别':wantedSelectedBookType}}" required error-message="{{wantedBookTypeErr}}" />
+      </view>
+      <van-field value="{{ wantedBookNameValue }}" clearable label="书名" placeholder="请输入书名" bind:change="getWandtedBookName" required error-message="{{wantedBookNameErr}}" />
+      <van-field value="{{ wantedAuthorValue }}" clearable label="作者" placeholder="请输入作者" bind:change="getWantedAuthor" required error-message="{{wantedAuthorErr}}" />
+      <van-field value="{{ wantedPressValue }}" clearable label="出版社" placeholder="请输入出版社" bind:change="getWantedPress" />
+      <van-field type="digit" value="{{ wantedPriceValue }}" label="求购价" placeholder="请输入求购价" clearable bind:change="getWantedPrice" required error-message="{{wantedPriceErr}}" />
+      <van-field value="{{ wantedRemarkValue }}" label="备注" type="textarea" placeholder="备注信息" autosize clearable bind:change="getWantedRemark"/>
+      <van-cell title="{{ wantedContactType==1?'联系方式':wantedContactType}}" arrow-direction="down" is-link bind:click="showWantedContent" custom-class="contactSty" />
+      <van-field placeholder="补充联系方式以便卖家及时联系你" input-class="contactInput" clearable bind:change="getWantedContact" error-message="{{wantedContactErr}}" />
+  </van-cell-group>
+    <button class="upload" bindtap="uploadWanted" style="margin-top:30px" hover-class="uploadhover">发布</button>
 </view>
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />

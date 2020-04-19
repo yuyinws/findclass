@@ -1,0 +1,27 @@
+<van-cell-group>
+  <van-field
+    value="{{ contact }}"
+    label="联系方式"
+    placeholder="请留下您的联系方式"
+    border="{{ true }}"
+    clearable
+    bind:input="getContact"
+    error-message="{{contactErr}}"
+  />
+  <van-field
+    value="{{ feedback }}"
+    label="反馈"
+    type="textarea"
+    placeholder="请输入您的反馈..."
+    autosize
+    border="{{ true }}"
+    custom-style="height:200rpx"
+    clearable
+    bind:input="getFeedBack"
+    error-message="{{feedBackErr}}"
+    required
+  />
+</van-cell-group>
+<view style="height:20rpx"></view>
+<van-button round block type="primary" bind:click="confirm" loading-type="spinner" loading-text="上传中..." loading="{{loading}}">确定</van-button>
+<van-toast id="van-toast" />

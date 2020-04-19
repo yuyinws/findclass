@@ -1,10 +1,16 @@
 var openid = ""
 var bookName = ""
+var wantedBookName = ""
+var wantedPrice = ""
 var originalPrice = ""
 var sellPrice = ""
 var contact = ""
+var wantedContact = ""
 var press = ""
+var wantedPress = ""
 var author = ""
+var wantedAuthor = ""
+var wantedRemark = ""
 var remark = ""
 const bookType = {
   '理学': ['大气科学', '地理', '地球物理', '地质学', '海洋科学', '化学', '力学', '生物', '数学', '物理', '统计学', '天文学', '心理学', '材料科学', '其他'],
@@ -25,11 +31,14 @@ Page({
   data: {
     radio: 'sell',
     fileList: [],
+    wantedFileList:[],
     hidden: true,
     show: false,
+    wantedContactType:1,
     contactType: 1,
     selectedBookType: 1,
     loadingText: String,
+    wantedSelectedBookType:1,
     columns: [{
         values: Object.keys(bookType),
         className: 'column1'
@@ -42,18 +51,26 @@ Page({
     ],
     options1: ['微信号', '手机号', 'QQ'],
     bookTypeErr: String,
+    wantedBookTypeErr:String,
     bookNameErr: String,
+    wantedBookNameErr:String,
     pressErr: String,
+    wantedPressErr:String,
     originalPriceErr: String,
     sellPriceErr: String,
+    wantedPriceErr:String,
     contactErr: String,
+    wantedContactErr:String,
     authorErr:String,
+    wantedAuthorErr:String,
     bookNameValue: String,
     pressValue: String,
     originalPriceValue: String,
     sellPriceValue: String,
     authorValue:String,
-    remarkValue: String
+    remarkValue: String,
+    wantedPriceValue:String
+
   },
 
   
@@ -103,6 +120,35 @@ Page({
       }
     })
   },
+
+  afterWantedRead(event) {
+    this.setData({
+      hidden: false,
+      loadingText: "图片上传中"
+    })
+    var timestamp = (new Date()).valueOf();
+    console.log(event, event.detail.file.path)
+    const filePath = event.detail.file.path
+    wx.cloud.uploadFile({
+      cloudPath: 'sell/' + openid + '/' + timestamp + '.png',
+      filePath: filePath,
+      success: res => {
+        console.log(res)
+        var fileList = this.data.wantedFileList
+        fileList.push({
+          url: res.fileID,
+        })
+        this.setData({
+          wantedFileList: fileList,
+          hidden: true
+        })
+      },
+      fail: res => {
+        Toast.fail("图片上传失败")
+      }
+    })
+  },
+
   deleteImg(res) {
     var fileIndex = res.detail.index
     var fileList = this.data.fileList
@@ -123,8 +169,27 @@ Page({
     }).catch(() => {
       // on cancel
     });
-
-
+  },
+  deleteWantedImg(res) {
+    var fileIndex = res.detail.index
+    var fileList = this.data.wantedFileList
+    Dialog.confirm({
+      message: '是否删除图片'
+    }).then(() => {
+      wx.cloud.deleteFile({
+        fileList: [fileList[fileIndex].url]
+      }).then(res => {
+        fileList.splice(fileIndex, 1)
+        this.setData({
+          wantedFileList: fileList
+        })
+        Toast.success("删除成功")
+      }).catch(res => {
+        Toast.fail("删除失败")
+      })
+    }).catch(() => {
+      // on cancel
+    });
   },
   showPopup() {
     this.setData({
@@ -132,11 +197,18 @@ Page({
     })
   },
   onConfirm(e) {
-    console.log(e.detail.value)
-    this.setData({
-      selectedBookType: e.detail.value[0] + '-' + e.detail.value[1],
-      show: false
-    })
+    if (this.data.radio == "sell"){
+      this.setData({
+        selectedBookType: e.detail.value[0] + '-' + e.detail.value[1],
+        show: false
+      })
+    }else{
+      this.setData({
+        wantedSelectedBookType: e.detail.value[0] + '-' + e.detail.value[1],
+        show: false
+      })
+    }
+
   },
   onCancel(e) {
     this.setData({
@@ -187,6 +259,26 @@ Page({
     })
   },
 
+  showWantedContent() {
+    var that = this
+    $wuxSelect('#wux-select1').open({
+      value: this.data.value1,
+      options: this.data.options1,
+      onConfirm: (value, index, options) => {
+        console.log('onConfirm', value, index, options)
+        that.setData({
+          wantedContactType: value
+        })
+        if (index !== -1) {
+          this.setData({
+            value1: value,
+            displayValue1: options[index],
+          })
+        }
+      },
+    })
+  },
+
   uploadBook() {
     this.setData({
       bookNameErr: "",
@@ -205,30 +297,35 @@ Page({
       this.setData({
         bookTypeErr: "请选择书籍类别"
       })
+      return
     }
     if (!bookName) {
       this.setData({
         bookNameErr: "不得为空"
       })
       flag = 0
+      return
     }
     if (!author) {
       this.setData({
         authorErr: "不得为空"
       })
       flag = 0
+      return
     }
     if (!press) {
       this.setData({
         pressErr: "不得为空"
       })
       flag = 0
+      return
     }
     if (!originalPrice) {
       this.setData({
         originalPriceErr: "不得为空"
       })
       flag = 0
+      return
     } else {
       var originalPriceStr = originalPrice + ""
       var originalPriceRegex =
@@ -238,6 +335,7 @@ Page({
           originalPriceErr: "请检查价格输入格式，小数点后至多2位"
         })
         flag = 0
+        return
       }
     }
     if (!sellPrice) {
@@ -245,6 +343,7 @@ Page({
         sellPriceErr: "不得为空"
       })
       flag = 0
+      return
     } else {
       var sellPriceStr = sellPrice + ""
       var sellPriceRegex =
@@ -254,6 +353,7 @@ Page({
           sellPriceErr: "请检查价格输入格式，小数点后至多2位"
         })
         flag = 0
+        return
       }
     }
     if (contact&&this.data.contactType == 1) {
@@ -261,6 +361,7 @@ Page({
         contactErr: ' 请选择联系方式 '
       })
       flag = 0
+      return
     }
     if (flag) {
       console.log(this.data.fileList)
@@ -304,26 +405,101 @@ Page({
   getBookName(e) {
     bookName = e.detail
   },
+  getWandtedBookName(e){
+    wantedBookName = e.detail
+  },
   getOriPrice(e) {
     originalPrice = e.detail
   },
   getSellPrice(e) {
     sellPrice = e.detail
   },
+  getWantedPrice(e){
+    wantedPrice = e.detail
+  },
   getContact(e) {
     contact = e.detail
+  },
+  getWantedContact(e){
+    wantedContact = e.detail
   },
   getPress(e) {
     press = e.detail
   },
+  getWantedPress(e){
+    wantedPress = e.detail
+  },
   getAuthor(e){
     author = e.detail
+  },
+  getWantedAuthor(e){
+    wantedAuthor = e.detail
   },
   getRemark(e){
     remark = e.detail
   },
+  getWantedRemark(e) {
+    wantedRemark = e.detail
+  },
+  uploadWantedToSql() {
+    this.setData({
+      hidden: false,
+      loadingText: "上传中..."
+    })
+    var booktype = this.data.wantedSelectedBookType
+    var that = this
+    wantedPrice = that.returnFloat(wantedPrice)
+    wx.cloud.callFunction({
+      name:"addSellBook",
+      data:{
+        bookType: booktype,
+        openid:openid,
+        timestamp: new Date().getTime(),
+        imgList:that.data.wantedFileList,
+        bookName:wantedBookName,
+        originalPrice: "",
+        sellPrice: "",
+        wantedPrice:wantedPrice,
+        contactType:that.data.wantedContactType,
+        contact:wantedContact,
+        press:wantedPress,
+        author:wantedAuthor,
+        discount:"",
+        remark:wantedRemark,
+        type:"want"
+      }
+    }).then(res => {
+      console.log(res)
+      this.setData({
+        hidden: true,
+        wantedFileList: []
+      })
+      Dialog.confirm({
+        message: '发布成功，是否离开此页面？'
+      }).then(() => {
+        wx.navigateBack()
+      }).catch(() => {
+        that.setData({
+          wantedSelectedBookType: 1,
+          wantedFileList: [],
+          wantedBookNameValue: "",
+          wantedPressValue: "",
+          wantedPriceValue:"",
+          wantedRemarkValue: "",
+          wantedAuthorValue: ""
+        })
+        wantedBookName = ""
+        wantedPress = ""
+        wantedPrice= ""
+        wantedRemark = ""
+        wantedAuthor = ""
+      });
+    }).catch(err => {
+      Toast.fail("上传失败:(")
+    })
+
+  },
   upload(){
-    console.log(typeof(this.data.selectedBookType))
     var booktype = this.data.selectedBookType
     var that = this
     this.setData({
@@ -348,7 +524,8 @@ Page({
         press: press,
         author: author,
         discount: discount,
-        remark:remark
+        remark:remark,
+        type:"sell"
       }
     }).then(res => {
       console.log(res)
@@ -381,6 +558,82 @@ Page({
     }).catch(res => {
       Toast.fail("上传失败:(")
     })
-  }
+  },
+  uploadWanted(){
+    this.setData({
+      wantedBookNameErr: "",
+      wantedBookTypeErr: "",
+      wantedContactErr: "",
+      wantedPriceErr:"",
+      //wantedPressErr: "",
+      wantedAuthorErr: ""
+    })
+    var flag = 1
+    if (this.data.wantedSelectedBookType == 1){
+      this.setData({
+        wantedBookTypeErr:"请选择书籍类别!"
+      })
+      flag = 0
+      return
+    }
+    if(!wantedBookName){
+      this.setData({
+        wantedBookNameErr:"不得为空!"
+      })
+      flag = 0
+      return
+    }
+    if(!wantedAuthor){
+      this.setData({
+        wantedAuthorErr:"不得为空!"
+      })
+      flag = 0
+      return
+    }
+    if(!wantedPrice){
+      this.setData({
+        wantedPriceErr:"不得为空!"
+      })
+      flag = 0
+      return
+    }else{
+      var wantedPriceStr = wantedPrice + ""
+      var wantedPriceRegex =
+        wantedPriceStr.search(/(^[1-9]\d*(\.\d{1,2})?$)|(^[0]{1}(\.\d{1,2})?$)/)
+      if (wantedPriceRegex == -1) {
+        this.setData({
+          wantedPriceErr: "请检查价格输入格式，小数点后至多2位"
+        })
+        flag = 0
+        return
+      }
+    }
+    if (flag) {
+      console.log(this.data.fileList)
+      if (!wantedContact || this.data.wantedContactType == 1) {
+        Dialog.confirm({
+          message: '您还未填写联系方式，是否发布？'
+        }).then(() => {
+          this.uploadWantedToSql()
+        }).catch(() => {
+          // on cancel
+        });
+      }
+      else {
+        Dialog.confirm({
+          message: '是否确认发布？'
+        }).then(() => {
+          this.uploadWantedToSql()
+        }).catch(() => {
+          // on cancel
+        });
+
+      }
+    }
+
+    
+
+  },
+
 
 });

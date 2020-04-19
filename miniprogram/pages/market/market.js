@@ -33,7 +33,6 @@ Page({
   },
 
 onShow(){
-  console.log(getCurrentPages())
   wx.getStorage({
     key: 'userid',
     success: function (res) {
@@ -46,19 +45,43 @@ onShow(){
   onLoad() {
     this.$wuxBackdrop = $wuxBackdrop()
     var that = this
-    db.collection('sell').count().then(res => {
+    db.collection('sell').where({
+      type:"sell"
+    }).count().then(res => {
       console.log(res)
     })
-    db.collection('sell').get().then(res => {
+    db.collection('sell').where({
+      type:"want"
+    }).count().then(res => {
+      console.log(res)
+    })
+    this.getSellBookList()
+    this.getWantedBookList()
+
+  },
+  getSellBookList(){
+    db.collection('sell').where({
+      type: "sell"
+    }).get().then(res => {
       console.log(res.data)
-      that.setData({
+      this.setData({
         sellList: res.data
       })
     }).catch(res => {
       console.log(res)
     })
-
-
+  },
+  getWantedBookList(){
+    db.collection('sell').where({
+      type:"want"
+    }).get().then(res => {
+      console.log(res.data)
+      this.setData({
+        wantedList:res.data
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   },
   onPageScroll(e) {
     this.setData({
@@ -114,7 +137,6 @@ onShow(){
   },
 
   fabBtnOnChange(e) {
-    console.log(e)
     if (btnIndex !== -1) {
       btnIndex = -1
       return

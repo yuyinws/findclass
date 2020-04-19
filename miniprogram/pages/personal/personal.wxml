@@ -25,6 +25,7 @@
 
 <van-cell-group custom-class="cellGroup">
   <van-cell title="关于" is-link link-type="navigateTo" url="/pages/personal/about/about" />
+  <van-cell title="反馈" is-link link-type="navigateTo" url="/pages/personal/feedback/feedback" />
 </van-cell-group>
 
 <loading hidden="{{hidden}}">
