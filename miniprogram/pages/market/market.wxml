@@ -4,13 +4,16 @@
   <van-tabbar-item name="market" icon="balance-pay">交易市场</van-tabbar-item>
   <van-tabbar-item name="personal" icon="user-o">个人中心</van-tabbar-item>
 </van-tabbar>
-
 <view>
   <view style="width:95%;margin-left:2.5%;">
     <van-search value="{{ value }}" placeholder="搜索你想找的书籍" use-action-slot bind:change="onChange" bind:search="onSearch" leftIcon="search" custom-class="searchStyle">
       <view slot="action" bind:tap="onClick">搜索</view>
     </van-search>
-    <van-tabs bind:click="changeTabs" animated active="selectedTabs">
+    <van-dropdown-menu>
+      <van-dropdown-item bind:change="item1" popup-style="width:95%;margin-left:2.5%;border-radius:0 0 20rpx 20rpx" value="{{ value1 }}" options="{{ option1 }}" />
+      <van-dropdown-item bind:change="item2" popup-style="width:95%;margin-left:2.5%;border-radius:0 0 20rpx 20rpx" value="{{ value2 }}" options="{{ option2 }}" />
+    </van-dropdown-menu>
+    <van-tabs bind:change="changeTabs" swipeable animated active="{{selectedTab}}">
       <van-tab title="闲置">
         <view class="contentStyle">
           <view class="infoStyle" wx:for="{{sellList}}" data-id="{{item._id}}" bindtap="toBookDetail" hover-class="hoverOuterCard">
@@ -18,7 +21,7 @@
               <image class="bookImg" src="{{item.imgList[0].url}}"></image>
               <view class="title">{{item.bookName}}</view>
               <view class="author">{{item.author}}</view>
-              <view class="press">{{item.press}}</view>
+              <view class="press" wx:if="{{item.press.length > 0}}">{{item.press}}</view>
               <view class="price">￥{{item.sellPrice}}</view>
               <view class="discount">-{{item.discount}}%</view>
             </view>
@@ -27,12 +30,13 @@
       </van-tab>
       <van-tab title="求购">
         <view class="contentStyle">
-          <view class="infoStyle" wx:for="{{wantedList}}" hover-class="hoverOuterCard">
+          <view class="infoStyle" wx:for="{{wantedList}}" hover-class="hoverOuterCard" data-id="{{item._id}}" bindtap="toBookDetail">
             <view class="outerCard">
-              <image class="bookImg" src="{{item.imgList[0].url}}"></image>
+              <image class="bookImg" src="{{!item.imgList[0].url.length?defaultCover:item.imgList[0].url}}"></image>
               <view class="title">{{item.bookName}}</view>
               <view class="author">{{item.author}}</view>
-              <view class="press">{{item.press}}</view>
+              <view class="press" wx:if="{{item.press.length > 0}}">{{item.press}}</view>
+              <view class="press" wx:else>暂无出版社信息</view>
               <view class="price" style="width:400rpx">求购价:￥{{item.wantedPrice}}</view>
             </view>
           </view> 

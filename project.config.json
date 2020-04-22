@@ -22,7 +22,7 @@
 	},
 	"appid": "wxa9c7379c29c75b8f",
 	"projectname": "findClass",
-	"libVersion": "2.10.1",
+	"libVersion": "2.10.4",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",

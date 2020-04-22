@@ -16,11 +16,14 @@ Page({
     originalPrice:String,
     discount:String,
     press:String,
+    wantedPrice:String,
     starIcon:'../../style/icon/notstar.png',
     hidden:true,
     loadingText:String,
     bookType:"",
-    remark:""
+    remark:"",
+    defaultCover: "cloud://test-tkxjp.7465-test-tkxjp-1300603395/icon/defaultCover.jpg"
+
   },
 
   onShow(){
@@ -54,7 +57,8 @@ Page({
         press:info.press,
         bookType:info.bookType,
         timestamp:info.timestamp,
-        remark:info.remark
+        remark:info.remark,
+        wantedPrice:info.wantedPrice
       })
       
     })

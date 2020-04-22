@@ -15,13 +15,12 @@
 }
 
 .bookName {
-  font-size: 43rpx;
+  font-size: 36rpx;
 
 }
 
 .sellPrice {
   font-size: 50rpx;
-  font-weight: bold;
 }
 
 .discount {
@@ -104,7 +103,7 @@ left: -4rpx;
 }
 
 .timeago{
-  text-align: right;
+  text-align: left;
 color: #909399;
 
 }

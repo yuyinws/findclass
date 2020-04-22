@@ -49,7 +49,11 @@ float: left;
 left: 20rpx;
 top: 4px;
 font-size: 18px;
-position: relative
+position: relative;
+overflow:hidden; /*隐藏溢出*/
+text-overflow:ellipsis;/*当文本溢出包含元素时显示省略符号来代表被修剪的文本*/
+white-space:nowrap; /*规定段落中的文本不进行换行*/
+
 
 }
 
@@ -61,6 +65,9 @@ top: 10px;
 float: left;
 color: #909399;
 position: relative;
+overflow:hidden; /*隐藏溢出*/
+text-overflow:ellipsis;/*当文本溢出包含元素时显示省略符号来代表被修剪的文本*/
+white-space:nowrap; /*规定段落中的文本不进行换行*/
 
 }
 
@@ -85,7 +92,10 @@ left: 20rpx;
 top: 26rpx;
 width: 372rpx;
 float: left;
-color:#C0C4CC
+color:#C0C4CC;
+overflow:hidden; /*隐藏溢出*/
+text-overflow:ellipsis;/*当文本溢出包含元素时显示省略符号来代表被修剪的文本*/
+white-space:nowrap; /*规定段落中的文本不进行换行*/
 }
 
 .price{

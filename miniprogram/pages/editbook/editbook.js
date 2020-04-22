@@ -37,7 +37,7 @@ Page({
     wantedContactType:1,
     contactType: 1,
     selectedBookType: 1,
-    loadingText: String,
+    loadingText: "",
     wantedSelectedBookType:1,
     columns: [{
         values: Object.keys(bookType),
@@ -50,26 +50,26 @@ Page({
       }
     ],
     options1: ['微信号', '手机号', 'QQ'],
-    bookTypeErr: String,
-    wantedBookTypeErr:String,
-    bookNameErr: String,
-    wantedBookNameErr:String,
-    pressErr: String,
-    wantedPressErr:String,
-    originalPriceErr: String,
-    sellPriceErr: String,
-    wantedPriceErr:String,
-    contactErr: String,
-    wantedContactErr:String,
-    authorErr:String,
-    wantedAuthorErr:String,
-    bookNameValue: String,
-    pressValue: String,
-    originalPriceValue: String,
-    sellPriceValue: String,
-    authorValue:String,
-    remarkValue: String,
-    wantedPriceValue:String
+    bookTypeErr: "",
+    wantedBookTypeErr: "",
+    bookNameErr: "",
+    wantedBookNameErr: "",
+    pressErr: "",
+    wantedPressErr: "",
+    originalPriceErr: "",
+    sellPriceErr: "",
+    wantedPriceErr: "",
+    contactErr: "",
+    wantedContactErr: "",
+    authorErr: "",
+    wantedAuthorErr: "",
+    bookNameValue:"",
+    pressValue: "",
+    originalPriceValue: "",
+    sellPriceValue: "",
+    authorValue: "",
+    remarkValue: "",
+    wantedPriceValue: ""
 
   },
 
@@ -98,27 +98,33 @@ Page({
       hidden: false,
       loadingText: "图片上传中"
     })
-    var timestamp = (new Date()).valueOf();
-    console.log(event, event.detail.file.path)
-    const filePath = event.detail.file.path
-    wx.cloud.uploadFile({
-      cloudPath: 'sell/' + openid + '/' + timestamp + '.png',
-      filePath: filePath,
-      success: res => {
-        console.log(res)
-        var fileList = this.data.fileList
-        fileList.push({
-          url: res.fileID,
-        })
-        this.setData({
-          fileList: fileList,
-          hidden: true
-        })
-      },
-      fail: res => {
-        Toast.fail("图片上传失败")
-      }
+    
+    console.log(event.detail)
+    event.detail.file.forEach((item,index) => {
+      var timestamp = (new Date()).valueOf();
+      wx.cloud.uploadFile({
+        cloudPath: 'sell/' + openid + '/' + timestamp + index +'.png',
+        filePath: item.path,
+        success: res => {
+          var fileList = this.data.fileList
+          fileList.push({
+            url: res.fileID,
+          })
+          this.setData({
+            fileList: fileList,
+            hidden: true
+          })
+        },
+        fail: res => {
+          this.setData({
+            hidden: true
+          })
+          console.log(res)
+          Toast.fail("图片上传失败")
+        }
+      })
     })
+
   },
 
   afterWantedRead(event) {
@@ -127,26 +133,27 @@ Page({
       loadingText: "图片上传中"
     })
     var timestamp = (new Date()).valueOf();
-    console.log(event, event.detail.file.path)
-    const filePath = event.detail.file.path
-    wx.cloud.uploadFile({
-      cloudPath: 'sell/' + openid + '/' + timestamp + '.png',
-      filePath: filePath,
-      success: res => {
-        console.log(res)
-        var fileList = this.data.wantedFileList
-        fileList.push({
-          url: res.fileID,
-        })
-        this.setData({
-          wantedFileList: fileList,
-          hidden: true
-        })
-      },
-      fail: res => {
-        Toast.fail("图片上传失败")
-      }
+    event.detail.file.forEach((item,index) => {
+      wx.cloud.uploadFile({
+        cloudPath: 'sell/' + openid + '/' + timestamp + index + '.png',
+        filePath: item.path,
+        success: res => {
+          console.log(res)
+          var fileList = this.data.wantedFileList
+          fileList.push({
+            url: res.fileID,
+          })
+          this.setData({
+            wantedFileList: fileList,
+            hidden: true
+          })
+        },
+        fail: res => {
+          Toast.fail("图片上传失败")
+        }
+      })
     })
+
   },
 
   deleteImg(res) {
@@ -448,7 +455,7 @@ Page({
     })
     var booktype = this.data.wantedSelectedBookType
     var that = this
-    wantedPrice = that.returnFloat(wantedPrice)
+    wantedPrice = parseFloat(that.returnFloat(wantedPrice))
     wx.cloud.callFunction({
       name:"addSellBook",
       data:{
@@ -506,8 +513,8 @@ Page({
       hidden: false,
       loadingText: "上传中..."
     })
-    sellPrice = that.returnFloat(sellPrice)
-    originalPrice = that.returnFloat(originalPrice)
+    sellPrice = parseFloat(that.returnFloat(sellPrice))
+    originalPrice = parseFloat(that.returnFloat(originalPrice))
     var discount = ((sellPrice / originalPrice - 1) * -100).toFixed(0)
     wx.cloud.callFunction({
       name: 'addSellBook',

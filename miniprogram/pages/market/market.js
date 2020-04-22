@@ -7,7 +7,7 @@ const globalFunction = getApp()
 const _ = db.command
 const $ = db.command.aggregate
 var isLogin = false
-let btnIndex = -1
+let btnIndex = -1 
 const buttons = [{
     icon: "../../../style/icon/add-outline.png",
     label: "发布消息"
@@ -26,10 +26,22 @@ Page({
     active: 'market',
     scrollTop: 0,
     buttons,
-    selectedTab: "0",
+    selectedTab:0,
     sellList: [],
     wantedList: [],
     btnIndex,
+    defaultCover:"cloud://test-tkxjp.7465-test-tkxjp-1300603395/icon/defaultCover.jpg",
+    option1: [
+      { text: '发布时间', value: 'timestamp' },
+      { text: '价格', value: 'sellPrice' },
+      { text: '折扣', value: 'discount' }
+    ],
+    option2: [
+      { text: '升序', value: 'asc' },
+      { text: '降序', value: 'desc' },
+    ],
+    value1: 'timestamp',
+    value2: 'desc'
   },
 
 onShow(){
@@ -40,27 +52,63 @@ onShow(){
       isLogin = true
     },
   })
+  this.$wuxBackdrop = $wuxBackdrop()
+  var that = this
+  db.collection('sell').where({
+    type: "sell"
+  }).count().then(res => {
+    console.log(res)
+  })
+  db.collection('sell').where({
+    type: "want"
+  }).count().then(res => {
+    console.log(res)
+  })
+    this.getSellBookList(this.data.value1, this.data.value2)
+    this.getWantedBookList(this.data.value1, this.data.value2)
 },
 
   onLoad() {
-    this.$wuxBackdrop = $wuxBackdrop()
-    var that = this
-    db.collection('sell').where({
-      type:"sell"
-    }).count().then(res => {
-      console.log(res)
-    })
-    db.collection('sell').where({
-      type:"want"
-    }).count().then(res => {
-      console.log(res)
-    })
-    this.getSellBookList()
-    this.getWantedBookList()
+    // this.$wuxBackdrop = $wuxBackdrop()
+    // var that = this
+    // db.collection('sell').where({
+    //   type:"sell"
+    // }).count().then(res => {
+    //   console.log(res)
+    // })
+    // db.collection('sell').where({
+    //   type:"want"
+    // }).count().then(res => {
+    //   console.log(res)
+    // })
+    // this.getSellBookList(this.data.value1, this.data.value2)
+    // this.getWantedBookList(this.data.value1, this.data.value2)
 
   },
-  getSellBookList(){
-    db.collection('sell').where({
+  item1(e){
+    this.setData({
+      value1:e.detail
+    })
+    if(this.data.selectedTab == 0){
+      this.getSellBookList(this.data.value1, this.data.value2)
+    }else{
+      this.getWantedBookList(this.data.value1, this.data.value2)
+    }
+    
+  },
+  item2(e){
+    this.setData({
+      value2:e.detail
+    })
+    if (this.data.selectedTab == 0) {
+      this.getSellBookList(this.data.value1, this.data.value2)
+    } else {
+      this.getWantedBookList(this.data.value1, this.data.value2)
+    }
+  },
+  getSellBookList(v1,v2){
+    //desc 降序 asc 升序
+    db.collection('sell').orderBy(v1,v2).where({
       type: "sell"
     }).get().then(res => {
       console.log(res.data)
@@ -71,8 +119,9 @@ onShow(){
       console.log(res)
     })
   },
-  getWantedBookList(){
-    db.collection('sell').where({
+  getWantedBookList(v1,v2){
+    console.log(v1,v2)
+    db.collection('sell').orderBy(v1,v2).where({
       type:"want"
     }).get().then(res => {
       console.log(res.data)
@@ -89,9 +138,33 @@ onShow(){
     })
   },
   changeTabs(e) {
+    console.log(e)
+    let optionArr1 = [{ text: '发布时间', value:'timestamp' },
+                      { text: '价格', value:'sellPrice' },
+                      { text: '折扣', value: 'discount' }]
+    let optionArr2 = [{ text: '发布时间', value: 'timestamp' },
+                      { text: '价格', value: 'wantedPrice' }]
+    if(e.detail.index == 0){
+      this.setData({
+        option1: optionArr1
+      })
+    }
+    if(e.detail.index == 1){
+      this.setData({
+        option1: optionArr2,
+        value1:'timestamp'
+      })
+    }
     this.setData({
       selectedTab: e.detail.index
     })
+
+    if (this.data.selectedTab == 0) {
+      this.getSellBookList(this.data.value1, this.data.value2)
+    } else {
+      this.getWantedBookList(this.data.value1, this.data.value2)
+    }
+    
 
   },
   onChange(event) {

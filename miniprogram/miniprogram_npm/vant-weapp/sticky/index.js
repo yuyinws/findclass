@@ -1,4 +1,6 @@
 import { VantComponent } from '../common/component';
+import { pageScrollMixin } from '../mixins/page-scroll';
+const ROOT_ELEMENT = '.van-sticky';
 VantComponent({
     props: {
         zIndex: {
@@ -7,59 +9,91 @@ VantComponent({
         },
         offsetTop: {
             type: Number,
-            value: 0
+            value: 0,
+            observer: 'onScroll'
         },
-        disabled: Boolean
-    },
-    data: {
-        wrapStyle: '',
-        containerStyle: ''
-    },
-    methods: {
-        setStyle() {
-            const { offsetTop, height, fixed, zIndex } = this.data;
-            if (fixed) {
-                this.setData({
-                    wrapStyle: `top: ${offsetTop}px;`,
-                    containerStyle: `height: ${height}px; z-index: ${zIndex};`
-                });
-            }
-            else {
-                this.setData({
-                    wrapStyle: '',
-                    containerStyle: ''
-                });
-            }
+        disabled: {
+            type: Boolean,
+            observer: 'onScroll'
         },
-        observerContentScroll() {
-            const { offsetTop } = this.data;
-            const intersectionObserver = this.createIntersectionObserver({
-                thresholds: [0, 1]
-            });
-            this.intersectionObserver = intersectionObserver;
-            intersectionObserver.relativeToViewport({ top: -offsetTop });
-            intersectionObserver.observe('.van-sticky', (res) => {
-                if (this.data.disabled) {
-                    return;
-                }
-                // @ts-ignore
-                const { top, height } = res.boundingClientRect;
-                const fixed = top <= offsetTop;
-                this.$emit('scroll', {
-                    scrollTop: top,
-                    isFixed: fixed
-                });
-                this.setData({ fixed, height });
-                wx.nextTick(() => {
-                    this.setStyle();
-                });
-            });
+        container: {
+            type: null,
+            observer: 'onScroll'
         }
     },
-    mounted() {
-        this.observerContentScroll();
+    mixins: [
+        pageScrollMixin(function (event) {
+            this.onScroll(event);
+        })
+    ],
+    data: {
+        height: 0,
+        fixed: false,
+        transform: 0
     },
-    destroyed() {
-        this.intersectionObserver.disconnect();
+    mounted() {
+        this.onScroll();
+    },
+    methods: {
+        onScroll({ scrollTop } = {}) {
+            const { container, offsetTop, disabled } = this.data;
+            if (disabled) {
+                this.setDataAfterDiff({
+                    fixed: false,
+                    transform: 0
+                });
+                return;
+            }
+            this.scrollTop = scrollTop || this.scrollTop;
+            if (typeof container === 'function') {
+                Promise.all([this.getRect(ROOT_ELEMENT), this.getContainerRect()]).then(([root, container]) => {
+                    if (offsetTop + root.height > container.height + container.top) {
+                        this.setDataAfterDiff({
+                            fixed: false,
+                            transform: container.height - root.height
+                        });
+                    }
+                    else if (offsetTop >= root.top) {
+                        this.setDataAfterDiff({
+                            fixed: true,
+                            height: root.height,
+                            transform: 0
+                        });
+                    }
+                    else {
+                        this.setDataAfterDiff({ fixed: false, transform: 0 });
+                    }
+                });
+                return;
+            }
+            this.getRect(ROOT_ELEMENT).then((root) => {
+                if (offsetTop >= root.top) {
+                    this.setDataAfterDiff({ fixed: true, height: root.height });
+                    this.transform = 0;
+                }
+                else {
+                    this.setDataAfterDiff({ fixed: false });
+                }
+            });
+        },
+        setDataAfterDiff(data) {
+            wx.nextTick(() => {
+                const diff = Object.keys(data).reduce((prev, key) => {
+                    if (data[key] !== this.data[key]) {
+                        prev[key] = data[key];
+                    }
+                    return prev;
+                }, {});
+                this.setData(diff);
+                this.$emit('scroll', {
+                    scrollTop: this.scrollTop,
+                    isFixed: data.fixed || this.data.fixed
+                });
+            });
+        },
+        getContainerRect() {
+            const nodesRef = this.data.container();
+            return new Promise(resolve => nodesRef.boundingClientRect(resolve).exec());
+        }
     }
 });
