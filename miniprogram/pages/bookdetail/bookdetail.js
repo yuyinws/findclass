@@ -1,6 +1,7 @@
 const db = wx.cloud.database()
 const _ = db.command
 var _id = String
+var openid = ""
 var isStar = ""
 var bookid = String
 import Toast from '../../miniprogram_npm/vant-weapp/toast/toast'
@@ -31,8 +32,9 @@ Page({
     wx.getStorage({
       key: 'userid',
       success: function(res) {
-        console.log(res.data._id)
+        console.log(res)
         _id = res.data._id
+        openid = res.data.openid
         that.isStar()
         
       },
@@ -67,6 +69,26 @@ Page({
     console.log(event.detail)
     if (event.detail == 0){
       this.changeStar()
+    }
+    if(event.detail == 2){
+      console.log(bookid,openid)
+      db.collection('sell').where({
+        _id:bookid
+      }).get().then(res => {
+        console.log(res)
+        if(res.data[0].openid == openid){
+          wx.navigateTo({
+            url: '/pages/messagelist/messagelist?id=' + bookid,
+          })
+        }else{
+          wx.navigateTo({
+            url: '/pages/message/message?id=' + bookid,
+          })
+        }
+      }).catch(res => {
+        console.log(res)
+      })
+
     }
   },
   
@@ -162,6 +184,6 @@ Page({
       Toast.success("添加收藏失败!")
     })
   }
-  }
+  },
 
 })

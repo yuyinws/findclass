@@ -1,0 +1,21 @@
+<van-row>
+  <van-col offset="1" span="22">
+    以下{{messageList.length}}名用户对您发布的信息留了言，请选择其中一名与其进行交流:
+  </van-col>
+</van-row>
+<view style="background-color:white;width:95%;margin-left:2.5%;margin-top:20rpx;border-radius:20rpx;padding-top:20rpx;padding-bottom:20rpx" wx:for="{{messageList}}" wx:key="{{item._id.buy_id}}" data-id="{{item._id.buy_id}}" bindtap="toMessagePage">
+  <van-row>
+    <van-col offset="1">
+      <image style="width:80rpx;height:80rpx;border-radius:50%" src="{{item._id.user_info[0].avatarurl}}"></image>
+    </van-col>
+    <van-col offset="1">
+      <span style="display:block">{{item._id.user_info[0].nickname}}</span>
+      <span style="display:block">共有
+       <span style="color:red">{{item.count}}</span> 
+      条留言信息</span>
+    </van-col>
+    <van-col offset="9" >
+      <van-icon name="arrow" style="position:relative;top:25rpx" />
+    </van-col>
+  </van-row>
+</view>

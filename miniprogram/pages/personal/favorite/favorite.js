@@ -15,6 +15,7 @@ Page({
     })
   },
   data:{
+    active:0,
     classList:[],
     starList:[],
     loadingText:"加载中...",

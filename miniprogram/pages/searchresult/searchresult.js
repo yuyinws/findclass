@@ -18,8 +18,8 @@ Page({
   onLoad(e){
     var isViewShowArr = []
     var that = this
-    //var searchObj =JSON.parse(e.searchStr)
-    var searchObj = {course_name:"高等数学"}
+    var searchObj =JSON.parse(e.searchStr)
+    //var searchObj = {course_name:"高等数学"}
     var searchArr = []
     this.setData({
       hidden: false,
@@ -65,6 +65,12 @@ Page({
         count: $.sum(1)
       }).limit(30).end().then(res => {
         console.log(res)
+        if(res.list.length == 0){
+          that.setData({
+            hidden:true
+          })
+          return
+        }
         that.setData({
           result:res.list
         })

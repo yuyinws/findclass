@@ -7,7 +7,6 @@
   border-radius: 10rpx;
   width: 103%
 } */
-
 .contentStyle{
   margin-top: -9rpx;
   margin-bottom: 110rpx;

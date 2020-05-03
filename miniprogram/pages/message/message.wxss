@@ -1,0 +1,8 @@
+.van-cell{
+  position:fixed!important;
+  bottom:0!important
+}
+
+button:not([size='mini']){
+  width:100%!important
+}

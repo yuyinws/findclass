@@ -128,8 +128,7 @@
 
 <van-tabbar bind:change="onChange">
   <van-tabbar-item name="favorite">
-    <image slot="icon" src="cloud://test-tkxjp.7465-test-tkxjp-1300603395/icon/tag.png" style="width:30rpx"></image>
-    标签
+<van-tabbar-item name="mark" icon="bookmark-o">标签</van-tabbar-item>
   </van-tabbar-item>
   <van-tabbar-item name="comment" icon="comment-o">评价</van-tabbar-item>
 </van-tabbar>

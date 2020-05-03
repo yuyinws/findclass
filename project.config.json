@@ -178,6 +178,20 @@
 					"id": -1,
 					"name": "pages/editbook/editbook",
 					"pathName": "pages/editbook/editbook",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/message/message",
+					"pathName": "pages/message/message",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/messagelist/messagelist",
+					"pathName": "pages/messagelist/messagelist",
 					"scene": null
 				}
 			]

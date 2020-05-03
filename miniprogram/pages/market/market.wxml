@@ -6,8 +6,11 @@
 </van-tabbar>
 <view>
   <view style="width:95%;margin-left:2.5%;">
-    <van-search value="{{ value }}" placeholder="搜索你想找的书籍" use-action-slot bind:change="onChange" bind:search="onSearch" leftIcon="search" custom-class="searchStyle">
-      <view slot="action" bind:tap="onClick">搜索</view>
+    <van-search value="{{ searchKey }}" placeholder="请输入书名关键字" use-action-slot bind:change="handleChange" bind:search="search" leftIcon="search" custom-class="searchStyle">
+      <view slot="action">
+        <span bind:tap="search">搜索 </span>
+        <span bind:tap="queryAll"> 全部</span>
+      </view>
     </van-search>
     <van-dropdown-menu>
       <van-dropdown-item bind:change="item1" popup-style="width:95%;margin-left:2.5%;border-radius:0 0 20rpx 20rpx" value="{{ value1 }}" options="{{ option1 }}" />
@@ -50,5 +53,5 @@
 
 <wux-fab-button wux-class="toTopBtn" style="{{scrollTop>=500?'display:block':'display:none'}}" position="bottomRight" theme="stable" bind:change="toTop" hover-class="none" action="../../../style/icon/toTop.png" />
 <wux-backdrop id="wux-backdrop" />
-
+<van-toast id="van-toast" />
 <van-dialog id="van-dialog" />

@@ -2,6 +2,7 @@ import {
   $wuxBackdrop
 } from '../../miniprogram_npm/wux-weapp/index.js'
 import Dialog from '../../miniprogram_npm/vant-weapp/dialog/dialog'
+import Toast from '../../miniprogram_npm/vant-weapp/toast/toast.js';
 const db = wx.cloud.database()
 const globalFunction = getApp()
 const _ = db.command
@@ -230,5 +231,49 @@ onShow(){
     wx.navigateTo({
       url: '/pages/bookdetail/bookdetail?bookid=' + e.currentTarget.dataset.id,
     })
+  },
+  handleChange(e){
+    this.setData({
+      searchKey:e.detail
+    })
+  },
+  search(){
+    let key = this.data.searchKey
+    let type = ""
+    if(this.data.selectedTab == 0){
+      type = 'sell'
+    }else{
+      type = 'want'
+    }
+    db.collection('sell').where({
+      type:type,
+      bookName: db.RegExp({
+        regexp: '.*' + key + '.*',
+        opitions: 'i',
+      })
+    }).get().then(res => {
+      console.log(res)
+      if(res.data.length == 0){
+        Toast.fail("未找到搜索结果")
+      }else{
+        if(type == 'sell'){
+          this.setData({
+            sellList:res.data
+          })
+        }else{
+          this.setData({
+            wantedList:res.data
+          })
+        }
+
+      }
+
+    }).catch(res => {
+      console.log(res)
+    })
+  },
+  queryAll(){
+    this.getSellBookList(this.data.value1, this.data.value2)
+    this.getWantedBookList(this.data.value1, this.data.value2)
   }
 })
