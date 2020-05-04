@@ -4,3 +4,37 @@
   <van-tabbar-item name="market" icon="balance-pay">交易市场</van-tabbar-item>
   <van-tabbar-item name="personal" icon="user-o">个人中心</van-tabbar-item>
 </van-tabbar>
+
+<button style="position:relative" wx:if="{{!recommendShow}}" bindtap="recommend">查看今天的推荐</button>
+
+<swiper wx:if="{{recommendShow}}"  indicator-dots="true" style='width:100%;height:90%;border:1px solid'>  
+    <swiper-item wx:for="{{recommendResult}}">
+      <view style="background-color:white;width:95%;height:85%;margin-left:2.5%;margin-top:10%;border-radius:20rpx">
+        <van-row>
+          <van-col span="24">
+            <view style="text-align:center">{{item.class_info.course_name}}</view>
+          </van-col>
+        </van-row>
+        <van-row>
+          <van-col span="24">
+            <view style="text-align:center">{{item.class_info.teacher_name}}</view>
+          </van-col>
+        </van-row>
+        <van-row>
+          <van-col offset="1">
+            <view>最新评论:</view>
+          </van-col>
+        </van-row>
+        <van-row >
+          <van-col offset="1">
+            <view><van-rate disabled allow-half="true" value="{{item.comment[item.comment.length - 1].rate}}" bind:change="onChange" /></view>
+            <view>{{item.comment[item.comment.length - 1].comment}}</view>
+            
+          </van-col>
+        </van-row>
+        <van-row>
+          根据您的标签{{item.tags[0]}}向您推荐此课程
+        </van-row>
+      </view>
+    </swiper-item>
+</swiper>

@@ -6,6 +6,7 @@ const db = wx.cloud.database()
 const globalFunction = getApp()
 const _ = db.command
 const $ = db.command.aggregate
+import Toast from '../../miniprogram_npm/vant-weapp/toast/toast.js';
 Page({
   async onLoad(event){
     console.log(event)
@@ -18,7 +19,7 @@ Page({
       buyId = sendId
     }
    await this.getMessageRecord()
-   await console.log('bookid:'+ bookid,'sellId:' + sellId,"sendId:"+sendId,"buyId:"+buyId)
+   //await this.pageScrollToBottom()
   },
 
   data(){
@@ -53,8 +54,7 @@ Page({
       message:event.detail
     })
   },
-  sendMessage(){
-    
+  async sendMessage(){
     if(this.data.message.length == 0){
       console.log("不能为空")
     }else{
@@ -69,14 +69,17 @@ Page({
           buy_id:buyId
         }
       }).then(res => {
-        console.log(res)
+        this.getMessageRecord()
+        this.setData({
+          message:""
+        })
+        Toast.success("回复留言成功!")
       }).catch(res => {
         console.log(res)
       })
     }
   },
   getMessageRecord(){
-    console.log('bookid:' + bookid, 'sellId:' + sellId, "sendId:" + sendId, "buyId:" + buyId)
     var that = this
     wx.cloud.callFunction({
       name:"getMessageRecord",
@@ -85,24 +88,22 @@ Page({
         buy_id:buyId
       }
     }).then(res => {
-      console.log(res)
       that.setData({
         messageList: res.result.list
       })
+      that.pageScrollToBottom()
     }).catch(res => {
       console.log(res)
     })
-    // db.collection('message').aggregate().match({
-    //   book_id:bookid,
-    //   buy_id:buyId
-    // }).end().then(res => {
-    //   console.log(res)
-    //   that.setData({
-    //     messageList:res.list
-    //   })
-    // }).catch(res => {
-    //   console.log(res)
-    // })
-  }
+  },
+  pageScrollToBottom: function () {
+    wx.createSelectorQuery().select('#message-page').boundingClientRect(function (rect) {
+      console.log(rect)
+      // 使页面滚动到底部
+      wx.pageScrollTo({
+        scrollTop: rect.height
+      })
+    }).exec()
+  },
 
 })

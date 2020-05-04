@@ -10,6 +10,7 @@
     <van-button bind:tap="sendMessage" slot="button" size="small" type="primary">留言</van-button>
   </van-field>
 </van-cell-group>
+<view style="margin-bottom:150rpx" id="message-page">
 <view wx:for="{{messageList}}" style="margin-top:20rpx;">
   <van-row>
     <van-col wx:if="{{openid != item.send_id}}" offset="1">
@@ -17,21 +18,22 @@
     </van-col>
     <van-col wx:else offset="10" span="10">
       <view style="background-color:white;padding:20rpx;border-radius:20rpx">
-        <span style="display:block">{{item.user_info[0].nickname}}</span>
+        <span style="display:block;color:#C0C4CC">{{item.user_info[0].nickname}}</span>
         <span style="display:block">{{item.message}}</span>
-        <span style="display:block"><wux-timeago to="{{ item.timestamp }}" /></span>
-      </view>
+        <span style="display:block;color:#C0C4CC"><wux-timeago to="{{ item.timestamp }}" /></span>
+      </view> 
     </van-col>
     <van-col wx:if="{{openid != item.send_id}}" offset="1" span="10">
       <view style="background-color:white;padding:20rpx;border-radius:20rpx">
-        <span style="display:block">{{item.user_info[0].nickname}}</span>
+        <span style="display:block;color:#C0C4CC">{{item.user_info[0].nickname}}</span>
         <span style="display:block">{{item.message}}</span>
-        <span style="display:block"><wux-timeago to="{{ item.timestamp }}" /></span>
+        <span style="display:block;color:#C0C4CC"><wux-timeago to="{{ item.timestamp }}" /></span>
       </view>
     </van-col>
     <van-col offset="1" wx:else>
       <image style="width:80rpx;height:80rpx;border-radius:50%" src="{{item.user_info[0].avatarurl}}"></image>
     </van-col>
   </van-row>
-
 </view>
+</view>
+<van-toast id="van-toast" />

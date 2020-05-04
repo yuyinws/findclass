@@ -16,5 +16,5 @@ exports.main = async (event, context) => {
   }).match({
     book_id: event.book_id,
     buy_id: event.buy_id
-  }).end()
+  }).limit(1000).end()
 }

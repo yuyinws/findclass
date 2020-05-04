@@ -242,6 +242,9 @@ Page({
         }
       }).then(res => {
         console.log(res)
+        that.setData({
+          favoriteShow:false
+        })
       }).catch(res => {
         console.log(res)
       })
