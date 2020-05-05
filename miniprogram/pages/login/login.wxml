@@ -1,8 +1,9 @@
 <view class="card">
-<view class="title">使用微信账号登入蹭课</view>
+<view class="title">使用微信账号登入课之寻</view>
 <image class="logo" src="../../style/icon/logo.png"></image>
-<van-button icon="https://s2.ax1x.com/2020/02/22/3Qd5uR.png" size="normal" round type="primary" wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" custom-class="loginbtn">授权登录</van-button>
-<view wx:else>请升级微信版本</view>
+<van-button icon="https://s2.ax1x.com/2020/02/22/3Qd5uR.png" size="normal" round type="primary" wx:if="{{canIUse && !isUserInSQL}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" custom-class="loginbtn">授权登录</van-button>
+<view wx:if="{{canIuse}}">请升级微信版本</view>
+<van-button icon="https://s2.ax1x.com/2020/02/22/3Qd5uR.png" size="normal" round type="primary" wx:if="{{isUserInSQL}}" bindtap="justLogin" custom-class="loginbtn">授权登录</van-button>
 </view>
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />

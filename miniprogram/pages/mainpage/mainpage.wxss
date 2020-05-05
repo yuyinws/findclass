@@ -1,0 +1,11 @@
+.bookImg{
+width: 139rpx;
+height: 195rpx;
+margin-top: 12rpx;
+border-radius: 10rpx;
+float:left;
+box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+z-index: 0;
+position: relative;
+}
+

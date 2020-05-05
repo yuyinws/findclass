@@ -1,6 +1,7 @@
 const db = wx.cloud.database()
 const _ = db.command
 const app = getApp()
+var user_id = ""
 import Dialog from '../../miniprogram_npm/vant-weapp/dialog/dialog'
 import Toast from '../../miniprogram_npm/vant-weapp/toast/toast.js';
 Page({
@@ -25,10 +26,12 @@ Page({
       key: 'userid',
       success: function(res) {
         console.log(res)
+        user_id = res.data._id
         db.collection('user').where({
           openid:res.data.openid
         }).get().then(res => {
           console.log(res)
+
           if ( res.data.length == 1){
               that.setData({
                 isExist:true,
@@ -41,7 +44,7 @@ Page({
             that.setData({
               hidden:true
             })
-            Toast("有bug")
+            //Toast("有bug")
           }
         })
       },fail(res){
@@ -78,4 +81,15 @@ EditInfo(){
       url: '/pages/' + barName + '/' + barName
     })
   },
+  toMainPage(){
+    wx.navigateTo({
+      url: '/pages/mainpage/mainpage?id=' + user_id,
+    })
+  },
+  toMyMarketPage(){
+    var that = this
+    wx.navigateTo({
+      url: '/pages/mymarket/mymarket?openid=' + that.data.openid,
+    })
+  }
 })

@@ -10,12 +10,27 @@ App({
         traceUser: true,
       })
     }
+    this.checkIsLogin()
+    
   },
 
   globalData:{
     isLogin:false
   },
-
+  checkIsLogin(){
+    wx.getStorage({
+      key: 'userid',
+      success: function(res) {
+        console.log(res)
+      },
+      fail: function(err){
+        console.log(err)
+        wx.redirectTo({
+          url: '/pages/login/login',
+        })
+      }
+    })
+  },
   login(){
     const db = wx.cloud.database()
     const _ = db.command

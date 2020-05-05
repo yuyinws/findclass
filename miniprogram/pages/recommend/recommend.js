@@ -59,6 +59,7 @@ Page({
               item2.tagName = item1.name
               item2.count = item1.count
               classResult.push(item2)
+              //that.recommend()
             })
           })
         })

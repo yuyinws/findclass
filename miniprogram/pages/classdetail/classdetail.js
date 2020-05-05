@@ -191,6 +191,19 @@ Page({
         })
         that.getComment()
         that.getRate()
+        wx.cloud.callFunction({
+          name: "addPost",
+          data: {
+            user_id: userId,
+            post_type: 'comment',
+            post_target_id: classInfo,
+            timestamp: new Date().getTime()
+          }
+        }).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
       }).catch( res=> {
         that.setData({
           hidden: true
@@ -244,6 +257,19 @@ Page({
         console.log(res)
         that.setData({
           favoriteShow:false
+        })
+        wx.cloud.callFunction({
+          name:"addPost",
+          data:{
+            user_id: userId,
+            post_type: 'tag',
+            post_target_id: classInfo,
+            timestamp: new Date().getTime()
+          }
+        }).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
         })
       }).catch(res => {
         console.log(res)

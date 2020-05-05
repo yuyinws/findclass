@@ -12,6 +12,7 @@ var author = ""
 var wantedAuthor = ""
 var wantedRemark = ""
 var remark = ""
+var user_id = ""
 const bookType = {
   '理学': ['大气科学', '地理', '地球物理', '地质学', '海洋科学', '化学', '力学', '生物', '数学', '物理', '统计学', '天文学', '心理学', '材料科学', '其他'],
   '工学': ['机器仪表类', '材料类', '测绘类', '地矿类', '电工电子类', '海洋工程类', '化工制药类', '航空航天类', '环境安全类', '交通运输类', '轻工制造类', '土木工程类', '能源动力类', '生物工程类', '其他'],
@@ -81,6 +82,7 @@ Page({
       success: function(res) {
         console.log(res)
         openid = res.data.openid
+        user_id = res.data._id
       },
       fail(res) {
 
@@ -477,6 +479,19 @@ Page({
       }
     }).then(res => {
       console.log(res)
+      wx.cloud.callFunction({
+        name: "addPost",
+        data: {
+          user_id: user_id,
+          post_type: 'sell',
+          post_target_id: res.result._id,
+          timestamp: new Date().getTime()
+        }
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
       this.setData({
         hidden: true,
         wantedFileList: []
@@ -536,6 +551,19 @@ Page({
       }
     }).then(res => {
       console.log(res)
+      wx.cloud.callFunction({
+        name: "addPost",
+        data: {
+          user_id: user_id,
+          post_type: 'sell',
+          post_target_id: res.result._id,
+          timestamp: new Date().getTime()
+        }
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
       this.setData({
         hidden: true,
         fileList:[]

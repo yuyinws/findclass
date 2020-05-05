@@ -1,0 +1,54 @@
+<van-tabs active="{{active}}" sticky bind:change="onTabChange">
+  <van-tab title="闲置">
+    <view wx:for="{{sellList}}" style="background-color:white;border:1px solid white">
+      <van-row data-id="{{item._id}}" style="color:#909399" bindtap="toDetailPage">
+          <van-col offset="1" >
+            <image class="bookImg" src="{{ item.imgList.length > 0?item.imgList[0].url:defaultCover }}"></image>
+          </van-col>
+          <view>
+          <van-col offset="1" span="12">
+            <view>
+              书名:{{item.bookName}}
+            </view>
+            <view>
+              作者:{{item.author}}
+            </view>
+            <wux-timeago to="{{ item.timestamp }}" />
+          </van-col>
+          <van-col offset="1">
+            <van-button type="danger" data-id="{{item._id}}" size="mini" catchtap="deleteSell">删除</van-button>
+          </van-col>
+          </view>
+          </van-row>
+      <van-divider />
+    </view>
+<view style="{{isSellDataOver?'display:block':'display:none'}}"><van-divider contentPosition="center" customStyle="color: black;border-color: #dcdfe6;font-size: 12px;">没有更多数据了</van-divider></view>
+  </van-tab>
+  <van-tab title="求购">
+      <view wx:for="{{wantList}}" style="background-color:white;border:1px solid white">
+      <van-row data-id="{{item._id}}" style="color:#909399" bindtap="toDetailPage">
+          <van-col offset="1" >
+            <image class="bookImg" src="{{ item.imgList.length > 0?item.imgList[0].url:defaultCover }}"></image>
+          </van-col>
+          <view>
+          <van-col offset="1" span="12">
+            <view>
+              书名:{{item.bookName}}
+            </view>
+            <view>
+              作者:{{item.author}}
+            </view>
+            <wux-timeago to="{{ item.timestamp }}" />
+          </van-col>
+          <van-col offset="1">
+            <van-button type="danger" data-id="{{item._id}}" size="mini" catchtap="deleteSell">删除</van-button>
+          </van-col>
+          </view>
+          </van-row>
+      <van-divider />
+    </view>
+<view style="{{isSellDataOver?'display:block':'display:none'}}"><van-divider contentPosition="center" customStyle="color: black;border-color: #dcdfe6;font-size: 12px;">没有更多数据了</van-divider></view>
+  </van-tab>
+</van-tabs>
+<van-dialog id="van-dialog"/>
+<van-toast id="van-toast" />

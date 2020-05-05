@@ -1,0 +1,63 @@
+
+<view style="background-color:white;width:100%;padding-top:20rpx">
+  <image style="width:100rpx;height:100rpx;border-radius:50%;margin-left:325rpx" src="{{userInfo.avatarurl}}"></image>
+  <van-row>
+    <van-col span="24">
+      <view style="text-align:center;margin-top:30rpx;margin-bottom:30rpx">
+        {{userInfo.introduction}}
+      </view>
+    </van-col>
+  </van-row>
+  <van-tabs sticky active="{{ active }}" bind:change="onChange">
+    <van-tab title="动态">
+      <view wx:for="{{ postList }}">
+        <van-row style="color:#909399" data-id="{{item.post_target_id}}" data-type="{{item.post_type}}" bindtap="toDetailPage">
+          <van-col offset="1" span="23" >
+            <view wx:if="{{item.post_type == 'tag' }}">
+              <view>添加标签:</view>
+              <view>给课程"{{item.post_target_id.course_name}}"添加了标签</view>
+              <wux-timeago to="{{ item.timestamp }}" />
+            </view>
+            <view wx:if="{{item.post_type == 'comment' }}">
+              <view>发布评价:</view>
+              <view>给课程"{{item.post_target_id.course_name}}"发布了一条评价</view>
+              <wux-timeago to="{{ item.timestamp }}" />
+            </view>
+            <view wx:if="{{item.post_type == 'sell' }}">
+              <view>市场发布:</view>
+              <view>在市场中发布了书籍:《{{item.sellList[0].bookName}}》</view>
+              <wux-timeago to="{{ item.timestamp }}" />
+            </view>
+          </van-col>
+        </van-row>
+        <van-divider />
+      </view>
+    </van-tab>
+    <van-tab title="市场">
+      <view wx:for="{{userSellList}}">
+        <van-row data-id="{{item._id}}" style="color:#909399" bindtap="toDetailPage">
+          <van-col offset="1" >
+            <image class="bookImg" src="{{ item.imgList.length > 0?item.imgList[0].url:defaultCover }}"></image>
+          </van-col>
+          <view style="margin-top:40rpx">
+          <van-col offset="1">
+            <view>
+              类型:<span wx:if="{{item.type== 'sell' }}">闲置</span>
+                   <span wx:if="{{item.type== 'want' }}">求购</span>
+            </view>
+            <view>
+              书名:{{item.bookName}}
+            </view>
+            <view>
+              作者:{{item.author}}
+            </view>
+            <wux-timeago to="{{ item.timestamp }}" />
+          </van-col>
+          </view>
+        </van-row>
+        <van-divider />
+      </view>
+  <view style="{{isSellDataOver?'display:block':'display:none'}}"><van-divider contentPosition="center" customStyle="color: black;border-color: #dcdfe6;font-size: 12px;">没有更多数据了</van-divider></view>
+    </van-tab>
+</van-tabs>
+</view>

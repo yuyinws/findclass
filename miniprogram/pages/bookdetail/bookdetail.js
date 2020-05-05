@@ -5,6 +5,8 @@ var openid = ""
 var isStar = ""
 var bookid = String
 import Toast from '../../miniprogram_npm/vant-weapp/toast/toast'
+import Dialog from '../../miniprogram_npm/vant-weapp/dialog/dialog'
+
 Page({
 
   data:{
@@ -63,6 +65,12 @@ Page({
         wantedPrice:info.wantedPrice
       })
       
+    }).catch(err => {
+      Dialog.alert({
+        message: '未找到此发布，可能已被发布者删除'
+      }).then(() => {
+        wx.navigateBack()
+      });
     })
   },
   onChange(event) {

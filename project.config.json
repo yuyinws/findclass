@@ -192,6 +192,49 @@
 					"id": -1,
 					"name": "pages/messagelist/messagelist",
 					"pathName": "pages/messagelist/messagelist",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mainpage/mainpage",
+					"pathName": "pages/mainpage/mainpage",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mainpage/mainpage",
+					"pathName": "pages/mainpage/mainpage",
+					"query": "id=5ae2776a-8c3d-46df-9883-e65a067a744f",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mymarket/mymarket",
+					"pathName": "pages/mymarket/mymarket",
+					"query": "openid= oeYuX5FdYTrutil9B1hfODovQFMo",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mymarket/mymarket",
+					"pathName": "pages/mymarket/mymarket",
+					"query": "openid=oeYuX5FdYTrutil9B1hfODovQFMo",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/checkrouter/checkrouter",
+					"pathName": "pages/checkrouter/checkrouter",
+					"query": "openid=oeYuX5FdYTrutil9B1hfODovQFMo",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/login/login",
+					"pathName": "pages/login/login",
+					"query": "",
 					"scene": null
 				}
 			]
