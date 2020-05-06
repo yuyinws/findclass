@@ -120,7 +120,7 @@ Page({
                             })
                             Toast.success("登录成功！")
                             wx.redirectTo({
-                              url: '/pages/personal/personal',
+                              url: '/pages/chooserecommend/chooserecommend',
                             })
                           }
                           else {

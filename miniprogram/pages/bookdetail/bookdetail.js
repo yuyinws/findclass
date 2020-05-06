@@ -1,6 +1,6 @@
 const db = wx.cloud.database()
 const _ = db.command
-var _id = String
+var _id = ""
 var openid = ""
 var isStar = ""
 var bookid = String
@@ -25,7 +25,11 @@ Page({
     loadingText:String,
     bookType:"",
     remark:"",
-    defaultCover: "cloud://test-tkxjp.7465-test-tkxjp-1300603395/icon/defaultCover.jpg"
+    defaultCover: "cloud://test-tkxjp.7465-test-tkxjp-1300603395/icon/defaultCover.jpg",
+    sellerOpenid:"",
+    seller_id:"",
+    contactType:"",
+    contact:""
 
   },
 
@@ -34,11 +38,8 @@ Page({
     wx.getStorage({
       key: 'userid',
       success: function(res) {
-        console.log(res)
-        _id = res.data._id
         openid = res.data.openid
         that.isStar()
-        
       },
     })
   },
@@ -62,10 +63,22 @@ Page({
         bookType:info.bookType,
         timestamp:info.timestamp,
         remark:info.remark,
-        wantedPrice:info.wantedPrice
+        wantedPrice:info.wantedPrice,
+        sellerOpenid:info.openid,
+        contact: info.contact,
+        contactType:info.contactType
       })
-      
+      console.log(this.data.sellerOpenid)
+      db.collection('user').where({
+        openid: that.data.sellerOpenid
+      }).get().then(res => {
+        console.log(res)
+        that.setData({
+          seller_id:res.data[0]._id
+        })
+      })
     }).catch(err => {
+      console.log(err)
       Dialog.alert({
         message: '未找到此发布，可能已被发布者删除'
       }).then(() => {
@@ -74,9 +87,15 @@ Page({
     })
   },
   onChange(event) {
-    console.log(event.detail)
+    console.log()
+    var that = this
     if (event.detail == 0){
       this.changeStar()
+    }
+    if(event.detail == 1){
+      wx.navigateTo({
+        url: '/pages/mainpage/mainpage?id=' + that.data.seller_id,
+      })
     }
     if(event.detail == 2){
       console.log(bookid,openid)
@@ -97,6 +116,24 @@ Page({
         console.log(res)
       })
 
+    }
+    if(event.detail == 3){
+      console.log(that.data.contact)
+      if(that.data.contact.length == 0){
+        Toast.fail("卖家未留下联系方式")
+      }else{
+        wx.setClipboardData({
+          data: that.data.contact,
+          success(res) {
+            wx.hideToast()
+            Dialog.alert({
+              message: "已复制卖家的" + that.data.contactType
+            }).then(() => {
+              // on close
+            });
+          }
+        })
+      }
     }
   },
   

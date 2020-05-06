@@ -1,1 +1,3 @@
-/* miniprogram/pages/recommend/recommend.wxss */
+.van-buttom{
+  width:100%!important
+}

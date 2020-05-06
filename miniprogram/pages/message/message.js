@@ -28,8 +28,8 @@ Page({
     openid:""
   },
 
-  getSellId(){
-    db.collection('sell').where({
+  async getSellId(){
+    await db.collection('sell').where({
       _id:bookid
     }).get().then(res => {
       sellId = res.data[0].openid
@@ -37,9 +37,9 @@ Page({
       console.log(res)
     })
   },
-  getSendId(){
+  async getSendId(){
     var that = this
-    wx.getStorage({
+    await wx.getStorage({
       key: 'userid',
       success: function(res) {
         sendId = res.data.openid
@@ -49,7 +49,7 @@ Page({
       },
     })
   },
-  getMessage(event){
+   getMessage(event){
     this.setData({
       message:event.detail
     })
@@ -59,7 +59,7 @@ Page({
       console.log("不能为空")
     }else{
 
-      wx.cloud.callFunction({
+      await wx.cloud.callFunction({
         name:"addMessage",
         data:{
           message: this.data.message,
@@ -79,15 +79,17 @@ Page({
       })
     }
   },
-  getMessageRecord(){
+  async getMessageRecord(){
     var that = this
-    wx.cloud.callFunction({
+    console.log(bookid,buyId)
+    await wx.cloud.callFunction({
       name:"getMessageRecord",
       data:{
         book_id:bookid,
         buy_id:buyId
       }
     }).then(res => {
+      console.log(res)
       that.setData({
         messageList: res.result.list
       })

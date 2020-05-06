@@ -70,8 +70,10 @@
   background:  #2fbd57;
 }
 
-.van-button--large{
+.van-button{
   width:100%!important
 }
+
+
 
 

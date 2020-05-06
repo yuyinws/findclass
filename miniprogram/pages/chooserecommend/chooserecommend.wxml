@@ -1,0 +1,17 @@
+<view style="text-align:center;margin-top:10%">我们为你准备了一些热门课程标签，请选择其中几个以便更好的体验！</view>
+<view style="margin-top:15%">
+  <van-row>
+    <van-col  offset="1" wx:for="{{tags}}" >
+      <van-tag bindtap="chooseTag" data-index="{{index}}" custom-class="tag" size="large" plain="{{!item.active}}" type="primary">{{item.tagName}}</van-tag>
+    </van-col>
+  </van-row>
+  <van-row>
+    <van-col offset="8">
+    <view style="margin-top:40rpx">
+      <van-button bindtap="start" round type="primary">开启寻课之旅</van-button>
+    </view>
+    </van-col>
+  </van-row>
+</view>
+
+<van-dialog id="van-dialog" />

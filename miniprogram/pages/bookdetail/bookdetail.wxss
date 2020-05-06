@@ -107,3 +107,8 @@ left: -4rpx;
 color: #909399;
 
 }
+
+
+.van-bottom{
+  width:100%!important
+}

@@ -8,7 +8,6 @@ var sellSkip = 0
 var postSkip = 0
 Page({
   async onLoad(event){
-    console.log(event)
     user_id = event.id
     await this.getUserInfo()
     this.getUserSell()

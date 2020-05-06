@@ -236,6 +236,12 @@
 					"pathName": "pages/login/login",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/chooserecommend/chooserecommend",
+					"pathName": "pages/chooserecommend/chooserecommend",
+					"scene": null
 				}
 			]
 		}

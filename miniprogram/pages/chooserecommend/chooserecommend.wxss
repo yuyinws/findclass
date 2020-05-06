@@ -1,0 +1,7 @@
+.tag{
+  margin-top:20rpx
+}
+
+.van-button{
+  width: 100%!important
+}

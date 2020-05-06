@@ -9,13 +9,10 @@ const _ = db.command
 const $ = db.command.aggregate
 var isLogin = false
 let btnIndex = -1 
+var openid = ""
 const buttons = [{
     icon: "../../../style/icon/add-outline.png",
     label: "发布消息"
-  },
-  {
-    icon: "../../../style/icon/grid-outline.png",
-    label: "分类查看"
   },
   {
     icon: "../../../style/icon/my-market.png",
@@ -51,6 +48,7 @@ onShow(){
     success: function (res) {
       console.log(res)
       isLogin = true
+      openid=res.data.openid
     },
   })
   this.$wuxBackdrop = $wuxBackdrop()
@@ -203,10 +201,9 @@ onShow(){
       }
     }
     if (e.detail.index == 1) {
-      console.log("点击了分类")
-    }
-    if (e.detail.index == 2) {
-      console.log("点击了市场")
+      wx.navigateTo({
+        url: '/pages/mymarket/mymarket?openid=' + openid,
+      })
     }
   },
 
