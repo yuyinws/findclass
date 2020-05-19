@@ -118,6 +118,13 @@ Page({
       }
     })
     console.log(recommendResult)
+    var newRecommendResult = []
+    for (let i in recommendResult){
+      if (recommendResult[i].class_info!=='systemDefault'){
+        newRecommendResult.push(recommendResult[i])
+      }
+    }
+    recommendResult = newRecommendResult
     recommendResult.forEach(async(item, index) => {
       console.log(item.class_info)
       await wx.cloud.callFunction({

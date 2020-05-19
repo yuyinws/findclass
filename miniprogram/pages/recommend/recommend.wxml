@@ -21,7 +21,7 @@
             <span wx:if="{{day == 4}}">四</span>
             <span wx:if="{{day == 5}}">五</span>
             <span wx:if="{{day == 6}}">六</span>
-            <span wx:if="{{day == 7}}">日</span>
+            <span wx:if="{{day == 0}}">日</span>
           </view>
         </view>
       </van-col>
