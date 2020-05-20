@@ -1,14 +1,17 @@
 <van-tabs active="{{ active }}" bind:change="onChange" sticky animated>
   <van-tab title="课程">
-    <!-- <van-row custom-class="vanRow" wx:for="{{classList}}">
-      <van-col>
-        {{item.class_info.course_name}}
-      </van-col>
-      <van-col>
-        {{item.class_info.teacher_name}}
-      </van-col>
-    </van-row> -->
-    <view catchtap="checkCourseDetail" hover-class="presscard" wx:for="{{classList}}" wx:key="index" data-course_name="{{item.class_info.course_name}}" data-teacher_name="{{item.class_info.teacher_name}}" class="coursecard">
+      <van-tag 
+      style="margin-left:20rpx" 
+      size="medium" 
+      wx:for="{{tagList}}" 
+      wx:key="{{index}}" 
+      plain="{{item.active}}"
+      data-index="{{index}}"
+      data-tag_name="{{item.name}}"
+      bindtap="clickTag"
+      type="primary">
+      {{item.name}}</van-tag>
+    <view catchtap="checkCourseDetail" hover-class="presscard" wx:for="{{classList}}" wx:key="{{index}}" data-course_name="{{item.class_info.course_name}}" data-teacher_name="{{item.class_info.teacher_name}}" class="coursecard">
   <van-row>
   <view style="height:20rpx"></view>
     <van-col span="1"><text decode="{{true}}">&ensp;</text></van-col>

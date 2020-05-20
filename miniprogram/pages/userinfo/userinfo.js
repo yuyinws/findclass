@@ -19,7 +19,7 @@ Page({
   },
 
 
-  onLoad: function (options) {
+  onShow: function (options) {
     this.setData({
       loadingText:"资料加载中",
       hidden:false

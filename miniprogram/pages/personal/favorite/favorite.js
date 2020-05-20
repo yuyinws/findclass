@@ -11,6 +11,7 @@ Page({
         openid = res.data.openid
         that.getUserFavoriteClass()
         that.getUserStar()
+        that.getUserTag()
       },
     })
   },
@@ -18,6 +19,7 @@ Page({
     active:0,
     classList:[],
     starList:[],
+    tagList:[],
     loadingText:"加载中...",
     hidden:false
   },
@@ -44,6 +46,8 @@ Page({
     })
   },
   getUserFavoriteClassByTag(tag){
+    var that = this;
+    console.log(tag,user_id)
     wx.cloud.callFunction({
       name: "getUserClassByTag",
       data: {
@@ -51,6 +55,7 @@ Page({
         tag:tag
       }
     }).then(res => {
+      console.log(res)
       that.setData({
         classList: res.result.list
       })
@@ -82,11 +87,54 @@ Page({
       console.log(res)
     })
   },
+  getUserTag(){
+    var that = this;
+    wx.cloud.callFunction({
+      name:"getUserTag",
+      data:{
+        user_id:user_id
+      }
+    }).then(res => {
+      let tagArr = [];
+      res.result.list.forEach((item,index) => {
+        item.tags.forEach((item2,index2) => {
+          if(tagArr.indexOf(item2) == -1){
+            tagArr.push({name:item2,active:true})
+          }
+        })
+      })
+      tagArr.unshift({name:"所有",active:false})
+      that.setData({
+        tagList:tagArr
+      })
+
+    }).catch(res => {
+      console.log(res)
+    })
+  },
   checkCourseDetail(e){
     let searchStr = JSON.stringify(e.currentTarget.dataset)
     wx.navigateTo({
       url: '/pages/classdetail/classdetail?searchStr=' + searchStr
     })
+  },
+  clickTag(event){
+
+    var that = this;
+    var tagArr = this.data.tagList;
+    for(let i in tagArr){
+      tagArr[i].active = true;
+    }
+    tagArr[event.currentTarget.dataset.index].active = false;
+    this.setData({
+      tagList:tagArr
+    })
+    if(event.currentTarget.dataset.tag_name == '所有'){
+      this.getUserFavoriteClass();
+    } else{
+      this.getUserFavoriteClassByTag(event.currentTarget.dataset.tag_name);
+    }
+    
   },
   toBookDetail(e){
     wx.navigateTo({

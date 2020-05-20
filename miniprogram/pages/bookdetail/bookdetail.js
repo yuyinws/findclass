@@ -38,14 +38,15 @@ Page({
     wx.getStorage({
       key: 'userid',
       success: function(res) {
+        _id=res.data._id;
         openid = res.data.openid
-        that.isStar()
       },
     })
   },
   onLoad(e){
     var that = this
     bookid = e.bookid
+    that.isStar();
     db.collection('sell').where({
       _id:bookid
     }).get().then(res => {
@@ -68,11 +69,9 @@ Page({
         contact: info.contact,
         contactType:info.contactType
       })
-      console.log(this.data.sellerOpenid)
       db.collection('user').where({
         openid: that.data.sellerOpenid
       }).get().then(res => {
-        console.log(res)
         that.setData({
           seller_id:res.data[0]._id
         })
@@ -87,7 +86,6 @@ Page({
     })
   },
   onChange(event) {
-    console.log()
     var that = this
     if (event.detail == 0){
       this.changeStar()
@@ -140,8 +138,8 @@ Page({
   isStar(){
     var that = this
     db.collection('user').where({
-      star:bookid,
-      _id: _id
+      star:_.all([bookid]),
+      openid:'oeYuX5FdYTrutil9B1hfODovQFMo'
     }).get().then(res => {
       console.log(res)
       if (res.data.length==1){
@@ -209,6 +207,7 @@ Page({
         hidden: false,
         loadingText: "添加收藏中..."
       })
+      console.log(_id,bookid);
     wx.cloud.callFunction({
       name:"addStar",
       data:{
